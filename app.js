@@ -4,7 +4,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var multer = require('multer')
-var upload = multer({dest: 'uploads/'})
+var upload = multer({dest: 'uploads'})
 var fs = require('fs')
 
 GLOBAL.modulePath = __dirname + '/modules/'
