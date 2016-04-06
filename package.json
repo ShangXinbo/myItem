@@ -1,13 +1,13 @@
 {
   "name": "mykit",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "我的自己设计",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.13.0",
     "jade": "^1.11.0",

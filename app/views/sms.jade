@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    title #{title}
+    meta(charset='utf8')
+    script(src='/js/jquery.min.js')
+  body
+    #sms(style='width:200px; height:40px; text-align: center;') 点我发送短信
+    script(type='text/javascript').
+        $('#sms').on('click',function(){
+            $.ajax({
+                url:'/sms/sendSingle',
+                dataType:'json',
+                type: 'get',
+                data:{
+                    mobile: '18612119498'
+                },
+                success: function(data){
+                    alert(data);
+                }
+            });
+        });
+        
