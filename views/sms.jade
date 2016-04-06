@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    title #{title}
+    meta(charset='utf8')
+    script(src='/js/jquery.min.js')
+  body
+    #sms(style='width:200px; height:40px; text-align: center;') 点我发送短信
+    script(type='text/javascript').
+        $('#sms').on('click',function(){
+            $.ajax({
+                url:'https://sms.yunpian.com/v2/sms/single_send.json',
+                dataType:'json',
+                type: 'POST',
+                data:{
+                    apikey: '80b19200e90dcc958506a48fea5387eb',
+                    mobile: '18612119498',
+                    text : '提示您： 您的包裹已经到达韵达小官手里，请及时领取'
+                },
+                success: function(data){
+                    console.log(data);
+                },
+                error: function(error){
+
+                }
+            });
+        });
+        
