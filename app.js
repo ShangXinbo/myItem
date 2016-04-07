@@ -1,31 +1,23 @@
-
-'use strict';
-
 const express = require('express');
-const bodyParser = require('body-parser');
 const path = require('path');
-const fs = require('fs');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-const port = process.env.PORT || 3000;
 const app = express();
 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+require(path.join(__dirname, 'configs/routes'))(app);
+
 module.exports = app;
-
-// 全局变量
-GLOBAL = {
-    rootpath : path.normalize(__dirname),
-    controllerPath : path.join(__dirname + '/app/controller/'),
-    modulePath : path.join(__dirname + '/app/modules/'),
-    viewPath : path.join(__dirname + '/app/views/'),
-    configPath : path.join(__dirname + '/app/config/')
-};
-
-app
-.set('view engine', 'jade')
-.use(express.static('static'))
-.use(bodyParser.json())
-.set('views', GLOBAL.viewPath);
-
-require(GLOBAL.configPath + 'routes')(app);
-
-app.listen(port);
