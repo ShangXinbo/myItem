@@ -1,9 +1,10 @@
 
 'use strict';
 
-require('../modules/functions');
+
 const https = require('https');
 const qs = require('querystring');
+const fn = require('../modules/functions');
 
 const apikey = '80b19200e90dcc958506a48fea5387eb';
 const sms_host = 'sms.yunpian.com';
@@ -28,7 +29,7 @@ let post = function(req,res,uri,content){
             console.log('BODY: ' + chunk);  
         });  
     }); */
-    res.send(resData(0,'',{}));  
+    res.send(fn.resData(0, '发送成功', {}));
     res.end();   
 };
 

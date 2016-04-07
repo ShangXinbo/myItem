@@ -1,15 +1,16 @@
 
 'use strict';
-/**/
-function resData(status,msg,data){
-    if(!isNaN(status)&&Object.prototype.toString.call(msg)=="[object String]"){
-        let data = {
-            status : status,
-            msg : msg,
-            data : data
+
+exports.resData = function (status, msg, data) {
+    if (!isNaN(status) && Object.prototype.toString.call(msg) == "[object String]") {
+        let result = {
+            status: status,
+            msg: msg,
+            data: data
         };
-        return data;
-    }else{
+        return result;
+    } else {
         return false;
-    }   
-}
+    }
+};
+
