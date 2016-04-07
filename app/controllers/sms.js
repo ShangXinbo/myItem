@@ -1,6 +1,7 @@
 
 'use strict';
 
+require('../modules/functions');
 const https = require('https');
 const qs = require('querystring');
 
@@ -27,7 +28,7 @@ let post = function(req,res,uri,content){
             console.log('BODY: ' + chunk);  
         });  
     }); */
-    res.send('发送成功');  
+    res.send(resData(0,'',{}));  
     res.end();   
 };
 
