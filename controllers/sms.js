@@ -35,7 +35,7 @@ let post = function(req,res,uri,content){
 
 
 exports.showtpl = function(req,res){
-    res.render('sms');
+    res.render('sms',{title:'发送短信'});
 }; 
 
 exports.sendSingle = function(req,res){

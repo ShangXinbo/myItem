@@ -4,8 +4,7 @@ var fs = require('fs');
 
 exports.showtpl = function(req, res) {
     res.render('upload', {
-        title: "shang",
-        message: '点我上传'
+        title: "上传文件"
     });
 };
 exports.submit = function(req, res) {
