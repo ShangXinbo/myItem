@@ -6,16 +6,23 @@ const uploads = multer({dest: 'uploadfile'});
 const upload = require('../controllers/upload');
 const sms = require('../controllers/sms');
 const index = require('../controllers/index');
+const account = require('../controllers/account');
 
-
-module.exports = function (app) {
+module.exports = function (app,passport) {
 
     app
         .get('/', index)
         .get('/upload', upload.showtpl)
         .post('/upload/submit', uploads.single('file'), upload.submit)
-        .get('/sms', sms.showtpl)
-        .get('/sms/sendSingle', sms.sendSingle);
+        .get('/sms',isLoggedIn, sms.showtpl)
+        .get('/sms/sendSingle', sms.sendSingle)
+        .get('/account/login',account.login)
+        .post('/account/submit/',passport.authenticate('local-login', {
+            failureRedirect: '/account/login',
+            successRedirect : '/',
+            failureFlash: true
+        }));
+
 
     app.use(function (err, req, res, next) {
 
@@ -46,3 +53,10 @@ module.exports = function (app) {
         });*/
     });
 };
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated())
+        return next()
+
+    res.redirect('/account/login')
+}

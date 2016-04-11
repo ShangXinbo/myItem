@@ -4,7 +4,7 @@
 
 const https = require('https');
 const qs = require('querystring');
-const fn = require('../modules/functions');
+const fn = require('../models/functions');
 
 const apikey = '80b19200e90dcc958506a48fea5387eb';
 const sms_host = 'sms.yunpian.com';
