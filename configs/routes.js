@@ -1,8 +1,6 @@
 'use strict';
 
-const multer = require('multer');
-const uploads = multer({dest: 'uploadfile'});
-
+const uploads = require('multer')({dest: 'uploadfile'});
 const upload = require('../controllers/upload');
 const sms = require('../controllers/sms');
 const index = require('../controllers/index');
@@ -15,9 +13,9 @@ module.exports = function (app,passport) {
         .get('/upload', upload.showtpl)
         .post('/upload/submit', uploads.single('file'), upload.submit)
         .get('/sms',isLoggedIn, sms.showtpl)
-        .get('/sms/sendSingle', sms.sendSingle)
+        .get('/sms/sendSingle', isLoggedIn, sms.sendSingle)
         .get('/account/login',account.login)
-        .post('/account/submit/',passport.authenticate('local-login', {
+        .post('/account/submit/', passport.authenticate('local-login', {
             failureRedirect: '/account/login',
             successRedirect : '/',
             failureFlash: true
@@ -57,6 +55,5 @@ module.exports = function (app,passport) {
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next()
-
     res.redirect('/account/login')
 }
