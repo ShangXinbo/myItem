@@ -20,7 +20,7 @@ module.exports = function (passport) {
         passwordField: 'password',
         passReqToCallback: true
     }, function (req, username, password, done, res) {
-        User.findOne({'username': username, 'password': password}, function (err, user) {
+        User.findOne({'username': username,'password':password}, function (err, user) {
             console.log(err);
             console.log(user);
             if (err)
@@ -28,9 +28,6 @@ module.exports = function (passport) {
 
             if (!user)
                 return done(null, false, req.flash('loginMessage', 'No user found.'))
-
-            /*if (!user.validPassword(password))
-             return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'))*/
 
             return done(null, user);
             res.end();
