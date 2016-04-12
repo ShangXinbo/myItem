@@ -8,4 +8,4 @@ const accountSchema = new mongoose.Schema({
     last_login_time : Number 
 });
 
-module.exports = mongoose.model('account',accountSchema);
+module.exports = mongoose.model('Account',accountSchema);

@@ -1,11 +1,16 @@
 'use strict';
 
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
       require('../models/account');
-const accountModel = mongoose.model('account');
+const accountModel = mongoose.model('account');*/
 
 exports.login = function(req,res){
     res.render('login');
+    res.end();
+};
+
+exports.post = function(req,res){
+    console.log(123);
 }
 
 /*exports = function(req,res){

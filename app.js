@@ -2,50 +2,51 @@
 'use strict';
 
 const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
+const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const join = require('path').join;
 
 const app = express();
+const port = process.env.PORT || 3000;
+GLOBAL.database = 'mongodb://127.0.0.1:27017/yunda';
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.static(path.join(__dirname, 'public')));
-
-require('./configs/passport')(passport);
-
-app.use(session({resave: true, saveUninitialized: true,secret: 'cookie_secret'}));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
-
-require(path.join(__dirname, 'configs/routes'))(app,passport);
+app
+    .set('env','test')
+    .use(express.static(join(__dirname, 'public')))
+    .set('views', join(__dirname, 'views'))
+    .set('view engine', 'jade')
+    .use(favicon(join(__dirname, 'public', 'favicon.ico')))
+    .use(logger('dev'))
+    .use(cookieParser())
+    .use(bodyParser.json())
+    .use(bodyParser.urlencoded({extended: false}))
+    .use(session({resave:true,saveUninitialized:true, secret: 'node-auth'}))
+    .use(passport.initialize())
+    .use(passport.session())
+    .use(flash());
 
 module.exports = app;
+
+require('./configs/passport')(passport);
+require('./configs/routes')(app,passport);
 
 connect()
   .on('error', console.log)
   .on('disconnected', connect)
-  //.once('open', listen);
+  .once('open', listen);
 
 function listen () {
-    const port = 3000;
+    if (app.get('env') === 'test') return;
     app.listen(port);
     console.log('Express app started on port ' + port);
 }
 function connect () {
     let options = { server: { socketOptions: { keepAlive: 1 } } };
-    return mongoose.connect('mongodb://127.0.0.1:27017/yunda', options).connection;
+    return mongoose.connect(GLOBAL.database, options).connection;
 }

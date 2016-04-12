@@ -6,21 +6,20 @@ const sms = require('../controllers/sms');
 const index = require('../controllers/index');
 const account = require('../controllers/account');
 
-module.exports = function (app,passport) {
 
+module.exports = function (app,passport) {
     app
         .get('/', index)
-        .get('/upload', upload.showtpl)
         .post('/upload/submit', uploads.single('file'), upload.submit)
+        .get('/upload/', upload.showtpl)
+        .get('/sms/sendSingle*', isLoggedIn, sms.sendSingle)
         .get('/sms',isLoggedIn, sms.showtpl)
-        .get('/sms/sendSingle', isLoggedIn, sms.sendSingle)
-        .get('/account/login',account.login)
-        .post('/account/submit/', passport.authenticate('local-login', {
-            failureRedirect: '/account/login',
-            successRedirect : '/',
-            failureFlash: true
-        }));
-
+        .get('/login',account.login)
+        .get('/submit', function(req,res){
+            passport.initialize();
+            passport.authenticate('local');
+            //console.log(passport);
+        });
 
     app.use(function (err, req, res, next) {
 
@@ -54,6 +53,6 @@ module.exports = function (app,passport) {
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
-        return next()
-    res.redirect('/account/login')
+        return next();
+    res.redirect('/login')
 }
