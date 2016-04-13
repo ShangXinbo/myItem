@@ -12,14 +12,10 @@ module.exports = function (app,passport) {
         .get('/', index)
         .post('/upload/submit', uploads.single('file'), upload.submit)
         .get('/upload/', upload.showtpl)
-        .get('/sms/sendSingle*', isLoggedIn, sms.sendSingle)
-        .get('/sms',isLoggedIn, sms.showtpl)
-        .get('/login',account.login)
-        .get('/submit', function(req,res){
-            passport.initialize();
-            passport.authenticate('local');
-            //console.log(passport);
-        });
+        .get('/sms/sendSingle*', account.isLogged, sms.sendSingle)
+        .get('/sms',account.isLogged, sms.showtpl)
+        .all('/login',account.login)
+        .all('/logout',account.logout);
 
     app.use(function (err, req, res, next) {
 
@@ -51,8 +47,3 @@ module.exports = function (app,passport) {
     });
 };
 
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
-        return next();
-    res.redirect('/login')
-}

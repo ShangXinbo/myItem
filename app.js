@@ -3,13 +3,12 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-const passport = require('passport');
-const flash = require('connect-flash');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const mongoStore = require('connect-mongo')(session);
 const join = require('path').join;
 
 const app = express();
@@ -26,15 +25,20 @@ app
     .use(cookieParser())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({extended: false}))
-    .use(session({resave:true,saveUninitialized:true, secret: 'node-auth'}))
-    .use(passport.initialize())
-    .use(passport.session())
-    .use(flash());
+    .use(session({
+        resave:true,
+        saveUninitialized:true,
+        secret: 'shangxinbo',
+        store: new mongoStore({
+            url: GLOBAL.database,
+            autoRemove: 'interval',
+            autoRemoveInterval: 20  // In minutes. Default
+        })
+    }));
 
 module.exports = app;
 
-require('./configs/passport')(passport);
-require('./configs/routes')(app,passport);
+require('./configs/routes')(app);
 
 connect()
   .on('error', console.log)
