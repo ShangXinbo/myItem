@@ -3,12 +3,13 @@ extends layout
 block content
     .uk-vertical-align.uk-text-center.uk-height-1-1
         .uk-vertical-align-middle(style='width: 250px;')
-            img.uk-margin-bottom(src='images/login_title.png', alt='')
+            img.uk-margin-bottom(src='/images/login_title.png', alt='')
             form.uk-panel.uk-panel-box.uk-form(action='', method='post')
                 .uk-form-row
                     input.uk-width-1-1.uk-form-large(type='text', name="username" placeholder='用户名')
                 .uk-form-row
                     input.uk-width-1-1.uk-form-large(type='password', name="password" placeholder='密码')
+                    input(type="hidden",name="referrer",value="#{referrer}")
                 .uk-form-row
                     button.uk-width-1-1.uk-button.uk-button-primary.uk-button-large(href='javascript:void(0)') 登陆
                 .uk-form-row.uk-text-small

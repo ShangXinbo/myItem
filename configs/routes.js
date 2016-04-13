@@ -7,14 +7,14 @@ const index = require('../controllers/index');
 const account = require('../controllers/account');
 
 
-module.exports = function (app, passport) {
+module.exports = function (app) {
     app
         .get('/', index)
         .post('/upload/submit', uploads.single('file'), upload.submit)
         .get('/upload/', upload.showtpl)
         .get('/sms/sendSingle', account.isLogged, sms.sendSingle)
         .get('/sms', account.isLogged, sms.showtpl)
-        .all('/login', account.login)
+        .all('/login*', account.login)
         .all('/logout', account.logout);
 
     app.use(function (err, req, res, next) {

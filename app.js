@@ -12,7 +12,7 @@ const mongoStore = require('connect-mongo')(session);
 const join = require('path').join;
 
 const app = express();
-const port = process.env.PORT || 3000;
+
 GLOBAL.database = 'mongodb://127.0.0.1:27017/yunda';
 
 app
@@ -42,14 +42,7 @@ require('./configs/routes')(app);
 
 connect()
   .on('error', console.log)
-  .on('disconnected', connect)
-  .once('open', listen);
-
-function listen () {
-    if (app.get('env') === 'test') return;
-    app.listen(port);
-    console.log('Express app started on port ' + port);
-}
+  .on('disconnected', connect);
 function connect () {
     let options = { server: { socketOptions: { keepAlive: 1 } } };
     return mongoose.connect(GLOBAL.database, options).connection;

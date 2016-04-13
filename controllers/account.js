@@ -9,21 +9,20 @@ const accountSchema = new mongoose.Schema({
 
 let User = mongoose.model('Account', accountSchema);
 
-let refererUrl = '';
-
 exports.login = function (req, res) {
 
     if (req.body.username) {
         let username = req.body.username;
         let password = req.body.password;
+        let referrer = req.body.referrer;
         User.findOne({'username': username, 'password': password}, function (err, user) {
             if (user) {
                 req.session.regenerate(function () {
                     req.user = user;
                     req.session.userId = user._id;
                     req.session.save();
-                    if (refererUrl) {
-                        res.redirect(refererUrl);
+                    if (referrer && referrer != 'undefined') {
+                        res.redirect(referrer);
                     } else {
                         res.redirect('/');
                     }
@@ -41,17 +40,16 @@ exports.login = function (req, res) {
                     res.redirect('/');
                 }
             });
-        }else{
-            res.render('login');
+        } else {
+            var referrer = req.query.referrer;
+            res.render('login', {"referrer": referrer});
         }
     }
 };
 
 exports.logout = function (req, res) {
-
     res.clearCookie('connect.sid');
     req.user = null;
-
     req.session.regenerate(function () {
         res.redirect('/login');
     })
@@ -65,12 +63,10 @@ exports.isLogged = function (req, res, next) {
                 req.user = user;
                 next();
             } else {
-                refererUrl = req.headers['referer'];
-                res.redirect('/login');
+                res.redirect('/login?referrer=' + encodeURI(req.url));
             }
         });
     } else {
-        refererUrl = req.headers['referer'];
-        res.redirect('/login');
+        res.redirect('/login?referrer=' + encodeURI(req.url));
     }
 };
