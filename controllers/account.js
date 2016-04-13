@@ -8,6 +8,7 @@ const accountSchema = new mongoose.Schema({
 });
 
 let User = mongoose.model('Account', accountSchema);
+
 let refererUrl = '';
 
 exports.login = function (req, res) {
@@ -15,15 +16,15 @@ exports.login = function (req, res) {
     if (req.body.username) {
         let username = req.body.username;
         let password = req.body.password;
-        User.findOne({'username': username,'password':password}, function (err, user) {
+        User.findOne({'username': username, 'password': password}, function (err, user) {
             if (user) {
                 req.session.regenerate(function () {
                     req.user = user;
                     req.session.userId = user._id;
                     req.session.save();
-                    if(refererUrl){
+                    if (refererUrl) {
                         res.redirect(refererUrl);
-                    }else{
+                    } else {
                         res.redirect('/');
                     }
                 });
@@ -35,25 +36,20 @@ exports.login = function (req, res) {
     } else {
         let userId = req.session.userId;
         if (userId) {
-            let user = findUserById(userId);
-            if (user) {
-                req.user = user;
-                next();
-            } else {
-                refererUrl = request.headers['referer'];
-                res.redirect('/login');
-            }
-        } else {
-            refererUrl = request.headers['referer'];
-            res.redirect('/login');
+            User.findOne({'_id': userId}, function (err, user) {
+                if (user) {
+                    res.redirect('/');
+                }
+            });
+        }else{
+            res.render('login');
         }
-        res.render('login');
     }
 };
 
 exports.logout = function (req, res) {
 
-    req.clearCookie('connect.sid');
+    res.clearCookie('connect.sid');
     req.user = null;
 
     req.session.regenerate(function () {
@@ -64,16 +60,17 @@ exports.logout = function (req, res) {
 exports.isLogged = function (req, res, next) {
     let userId = req.session.userId;
     if (userId) {
-        let user = findUserById(userId);
-        if (user) {
-            req.user = user;
-            next();
-        } else {
-            refererUrl = request.headers['referer'];
-            res.redirect('/login');
-        }
+        User.findOne({'_id': userId}, function (err, user) {
+            if (user) {
+                req.user = user;
+                next();
+            } else {
+                refererUrl = req.headers['referer'];
+                res.redirect('/login');
+            }
+        });
     } else {
-        refererUrl = request.headers['referer'];
+        refererUrl = req.headers['referer'];
         res.redirect('/login');
     }
 };
