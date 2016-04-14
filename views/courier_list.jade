@@ -1,0 +1,58 @@
+extends layout
+
+block content
+    .uk-container.uk-container-center.uk-margin-large-bottom
+        nav.uk-navbar.uk-margin-large-bottom
+            a.uk-navbar-brand.uk-hidden-small 韵达快递管理平台
+            ul.uk-navbar-nav.uk-hidden-small
+                li
+                    a(href='layouts_frontpage.html') 订单管理
+                li
+                    a(href='') 用户管理
+                li
+                    a(href='layouts_portfolio.html') 短信发送池
+                li.uk-active
+                    a(href='layouts_blog.html') 个人主页
+        .uk-grid(data-uk-grid-margin='')
+            .uk-width-medium-3-4
+                h1.uk-article-title
+                    a(href='layouts_post.html') 用户管理
+                .uk-overflow-container
+                    table.uk-table.uk-text-nowrap
+                        thead
+                            tr
+                                th 用户id
+                                th 用户名
+                                th 手机号
+                                th 村区
+                                th 加入时间
+                                th 最近取单时间
+                        tbody
+                            tr
+                                td 1
+                                td 伤心博
+                                td 18612119498
+                                td 菜园
+                                td 2014-12-21 12:32:12
+                                td 2014-12-21 12:32:12
+                            tr
+                                td 1
+                                td 伤心博
+                                td 18612119498
+                                td 菜园
+                                td 2014-12-21 12:32:12
+                                td 2014-12-21 12:32:12
+                    ul.uk-pagination
+                        li
+                            a(href='') 上一页
+                        li.uk-active
+                            span 1
+                        li.uk-disabled
+                            span 2
+                        li.uk-disabled
+                            span 3
+                        li
+                            span 下一页
+            .uk-width-medium-1-4
+                | 预留功能区
+

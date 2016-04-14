@@ -1,7 +1,6 @@
 
 'use strict';
 
-
 const https = require('https');
 const qs = require('querystring');
 const fn = require('../models/functions');
@@ -10,7 +9,7 @@ const apikey = '80b19200e90dcc958506a48fea5387eb';
 const sms_host = 'sms.yunpian.com';
 
 
-let text = '【菜园韵达】您的快件已经被韵达小子接受了，请尽快领取'; // text of message
+let text = '【菜园韵达】您的快件已经被韵达小子接受了，请尽快领取';
 
 /*发送请求*/
 let post = function(req,res,uri,content){ 
@@ -34,15 +33,15 @@ let post = function(req,res,uri,content){
 };
 
 
-exports.showtpl = function(req,res){
-    res.render('sms',{title:'发送短信'});
+exports.list = function(req,res){
+    res.render('courier_list',{title:'发送短信'});
 }; 
 
 exports.sendSingle = function(req,res){
     let send_sms_uri = '/v2/sms/single_send.json';
     let mobile = req.query;
     let post_data = {  
-        'apikey': apikey,  
+        'apikey': apikey,
         'mobile': mobile,
         'text':text,
     }; 
