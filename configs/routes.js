@@ -3,6 +3,7 @@
 const uploads = require('multer')({dest: 'uploadfile'});
 const upload = require('../controllers/upload');
 const courier = require('../controllers/courier');
+const customer = require('../controllers/customer');
 const index = require('../controllers/index');
 const account = require('../controllers/account');
 
@@ -14,7 +15,8 @@ module.exports = function (app) {
         /*.get('/sms/sendSingle', account.isLogged, sms.sendSingle)
         .get('/sms/list', account.isLogged, sms.showtpl)*/
         .get('/courier/list', account.isLogged, courier.list)
-        .get('/courier/user', account.isLogged, courier.list)
+        .get('/courier/user', account.isLogged, customer.list)
+        .get('/courier/user/add*', account.isLogged, customer.add)
         .get('/courier/account', account.isLogged, courier.list)
         .all('/login*', account.login)
         .all('/logout', account.logout);

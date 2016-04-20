@@ -73,8 +73,40 @@
             </div>
         </div>
         <div class="uk-width-medium-1-4">
-            预留功能区
+            <a href="#my-id" data-uk-modal>添加用户</a>
         </div>
+    </div>
+</div>
+<div id="my-id" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+        <form class="uk-form">
+            <div class="uk-form-row">
+                <label class="uk-form-label" for="name">姓名:</label>
+                <input type="text" name="name" placeholder="">
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label" for="tel">电话:</label>
+                <input type="tel" name="tel" placeholder="">
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label" for="town">居住地:</label>
+                <select name="town">
+                    <option value="1">菜园村</option>
+                    <option value="2">杨各庄</option>
+                </select>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label" for="marks">备注:</label>
+                <textarea name="marks">
 
+                </textarea>
+            </div>
+            <div class="uk-form-row">
+                <button class="uk-button">确定</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>

@@ -32,7 +32,6 @@ let post = function(req,res,uri,content){
     res.end();   
 };
 
-
 exports.list = function(req,res){
     res.render('courier_list',{title:'发送短信'});
 }; 
