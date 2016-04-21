@@ -3,18 +3,23 @@
 
 //const https = require('https');
 const Customer = require('../models/Customer');
+const FN = require('../models/functions');
 
 exports.list = function(req,res){
-    res.render('customer_list',{title:'客户管理'});
+    Customer.find({},function(err,doc){
+        console.log(err);
+        console.log(doc);
+        res.render('customer_list',{
+            title:'客户管理',
+            customers: doc
+        });
+    });
 };
 exports.add = function(req,res){
-    console.log(req.params);
-    console.log(req.body);
-    let name = req.body.name;
-    let tel = req.body.tel;
-    let time = new Date();
-    let town = req.body.town;
-    res.end();
+    let name = req.query.name;
+    let tel = req.query.tel;
+    let time = new Date().getTime();
+    let town = req.query.town;
     let customerEntity = new Customer({
         name: name,
         tel : tel,
@@ -23,13 +28,16 @@ exports.add = function(req,res){
         join_time : time,
         last_time: time
     });
-    //console.log(customerEntity);
-    //console.log(customerEntity);
     customerEntity.save(function(err,data){
-        ///console.log(err);
-        //console.log(data);
+        if(err)console.log(err);
     });
-
+    res.send('end');
+};
+exports.del = function(req,res){
+    let id = req.query.id;
+    Customer.remove({_id:id},function(err,data){
+        res.send(FN.resData(0,'删除成功',{}));
+    })
 };
 
 

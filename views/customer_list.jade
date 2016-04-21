@@ -2,23 +2,24 @@ extends layout
 
 block content
     .uk-container.uk-container-center.uk-margin-large-bottom
+        h2.uk-margin-bottom.uk-margin-top.uk-container 韵达快递
         nav.uk-navbar.uk-margin-large-bottom
-            a.uk-navbar-brand.uk-hidden-small 韵达快递管理平台
             ul.uk-navbar-nav.uk-hidden-small
                 li
                     a(href='layouts_frontpage.html') 订单管理
-                li
+                li.uk-active
                     a(href='') 用户管理
                 li
                     a(href='layouts_portfolio.html') 短信发送池
-                li.uk-active
+                li
                     a(href='layouts_blog.html') 个人主页
         .uk-grid(data-uk-grid-margin='')
             .uk-width-medium-3-4
-                h1.uk-article-title
-                    a(href='layouts_post.html') 用户管理
+                h3 用户管理
+                hr.uk-article-divider
                 .uk-overflow-container
-                    table.uk-table.uk-text-nowrap
+                    - if(customers.length>0){
+                    table.uk-table.uk-text-nowrap.uk-table-striped
                         thead
                             tr
                                 th 用户id
@@ -27,21 +28,25 @@ block content
                                 th 村区
                                 th 加入时间
                                 th 最近取单时间
+                                th 操作
                         tbody
-                            tr
-                                td 1
-                                td 伤心博
-                                td 18612119498
-                                td 菜园
-                                td 2014-12-21 12:32:12
-                                td 2014-12-21 12:32:12
-                            tr
-                                td 1
-                                td 伤心博
-                                td 18612119498
-                                td 菜园
-                                td 2014-12-21 12:32:12
-                                td 2014-12-21 12:32:12
+                            - for(var i=0;i<customers.length;i++){
+                                tr
+                                    td #{customers[i]._id}
+                                    td #{customers[i].name}
+                                    td #{customers[i].tel}
+                                    td
+                                        if(customers[i].town==1)
+                                            | 菜园村
+                                        else if(customers[i].town==2)
+                                            | 杨各庄
+                                    td #{customers[i].join_time}
+                                    td #{customers[i].last_time}
+                                    td(data-id="#{customers[i]._id}")
+                                        a(data-do="edit") 修改
+                                         ||
+                                        a(data-do="del") 删除
+                            - }
                     ul.uk-pagination
                         li
                             a(href='') 上一页
@@ -53,6 +58,9 @@ block content
                             span 3
                         li
                             span 下一页
+                    - }else{
+                       | 没有数据
+                    - }
             .uk-width-medium-1-4
                 a(href='#add_customer', data-uk-modal='') 添加用户
     #add_customer.uk-modal
@@ -75,5 +83,6 @@ block content
                     textarea(name='marks')
                 .uk-form-row
                     button.uk-button 确定
+
 
     script(src='/js/customer.js')

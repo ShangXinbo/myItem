@@ -25,4 +25,31 @@ $(function(){
             }
         })
     });
+    $('[data-do="edit"]').on('click',function(event){
+
+    })
+    $('[data-do="del"]').on('click',function(event){
+        var id = $(this).parent().data('id');
+        console.log(id);
+        UIkit.modal.confirm("是否要删除该条数据?", function(){
+            $.ajax({
+                url: '/courier/user/del',
+                type: 'GET',
+                dataType : 'json',
+                data:{
+                    id: id
+                },
+                success:function(data){
+                    if(data.status==0){
+                        window.location.reload();
+                    }else{
+                        console.log(err);
+                    }
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            })
+        });
+    })
 })
