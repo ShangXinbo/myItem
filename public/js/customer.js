@@ -18,7 +18,9 @@ $(function(){
                 marks:marks
             },
             success:function(data){
-                console.log(data);
+                if(data.status==0){
+                    window.location.reload();
+                }
             },
             error:function(err){
                 console.log(err);
@@ -26,11 +28,11 @@ $(function(){
         })
     });
     $('[data-do="edit"]').on('click',function(event){
-
-    })
+        var id = $(this).parent().data('id');
+        
+    });
     $('[data-do="del"]').on('click',function(event){
         var id = $(this).parent().data('id');
-        console.log(id);
         UIkit.modal.confirm("是否要删除该条数据?", function(){
             $.ajax({
                 url: '/courier/user/del',

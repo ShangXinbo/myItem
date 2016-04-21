@@ -1,7 +1,6 @@
 
 'use strict';
 
-//const https = require('https');
 const Customer = require('../models/Customer');
 const FN = require('../models/functions');
 
@@ -30,8 +29,10 @@ exports.add = function(req,res){
     });
     customerEntity.save(function(err,data){
         if(err)console.log(err);
+        if(data){
+            res.send(FN.resData(0,'添加成功',{}));
+        }
     });
-    res.send('end');
 };
 exports.del = function(req,res){
     let id = req.query.id;
