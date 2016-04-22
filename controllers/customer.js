@@ -11,9 +11,15 @@ exports.list = function (req, res) {
     let pageNum = 10;
 
     Customer.getLists( page * pageNum, pageNum, function (err, doc) {
-        res.render('customer_list', {
-            title: '客户管理',
-            customers: doc
+        Customer.count({},function(err,count){
+            res.render('customer/list', {
+                title: '客户管理',
+                customers: doc,
+                pages: {
+                    current: parseInt(page) + 1,
+                    total : Math.ceil(count/pageNum)
+                }
+            });
         });
     });
 };

@@ -42,7 +42,7 @@ exports.login = function (req, res) {
             });
         } else {
             var referrer = req.query.referrer;
-            res.render('login', {"referrer": referrer});
+            res.render('account/login', {"referrer": referrer});
         }
     }
 };

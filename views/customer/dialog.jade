@@ -1,0 +1,41 @@
+
+#add_customer.uk-modal
+    .uk-modal-dialog
+        a.uk-modal-close.uk-close
+        form.uk-form(onsubmit='return false;')
+            .uk-form-row
+                label.uk-form-label(for='name') 姓名:
+                input(type='text', name='name', placeholder='')
+            .uk-form-row
+                label.uk-form-label(for='tel') 电话:
+                input(type='tel', name='tel', placeholder='')
+            .uk-form-row
+                label.uk-form-label(for='town') 居住地:
+                select(name='town')
+                    option(value='1') 菜园村
+                    option(value='2') 杨各庄
+            .uk-form-row
+                label.uk-form-label(for='marks') 备注:
+                textarea(name='marks')
+            .uk-form-row
+                button.uk-button 确定
+#edit_customer.uk-modal
+    .uk-modal-dialog
+        a.uk-modal-close.uk-close
+        form.uk-form(onsubmit='return false;')
+            .uk-form-row
+                label.uk-form-label(for='name') 姓名:
+                input(type='text', name='name', placeholder='')
+            .uk-form-row
+                label.uk-form-label(for='tel') 电话:
+                input(type='tel', name='tel', placeholder='')
+            .uk-form-row
+                label.uk-form-label(for='town') 居住地:
+                select(name='town')
+                    option(value='1') 菜园村
+                    option(value='2') 杨各庄
+            .uk-form-row
+                label.uk-form-label(for='marks') 备注:
+                textarea(name='marks')
+            .uk-form-row
+                button.uk-button 确定

@@ -1,0 +1,53 @@
+extends ../common/layout
+
+block content
+    .uk-container.uk-container-center.uk-margin-large-bottom
+
+        include ../common/nav
+
+        .uk-grid(data-uk-grid-margin='')
+            .uk-width-medium-3-4
+                h3 用户管理
+                hr.uk-article-divider
+                .uk-overflow-container
+                    - if(customers.length>0){
+                    table.uk-table.uk-text-nowrap.uk-table-striped
+                        thead
+                            tr
+                                th 用户id
+                                th 用户名
+                                th 手机号
+                                th 村区
+                                th 加入时间
+                                th 最近取单时间
+                                th 操作
+                        tbody
+                            - for(var i=0;i<customers.length;i++){
+                                tr
+                                    td #{customers[i]._id}
+                                    td #{customers[i].name}
+                                    td #{customers[i].tel}
+                                    td
+                                        if(customers[i].town==1)
+                                            | 菜园村
+                                        else if(customers[i].town==2)
+                                            | 杨各庄
+                                    td #{customers[i].join_time}
+                                    td #{customers[i].last_time}
+                                    td(data-id="#{customers[i]._id}")
+                                        a(data-do="edit") 修改
+                                         ||
+                                        a(data-do="del") 删除
+                            - }
+
+                    include ../common/pages
+
+                    - }else{
+                       | 没有数据
+                    - }
+            .uk-width-medium-1-4
+                a(href='#add_customer', data-uk-modal='') 添加用户
+
+    include dialog
+
+    script(src='/js/customer.js')

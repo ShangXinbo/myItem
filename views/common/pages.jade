@@ -1,0 +1,97 @@
+- var baseUrl = '/courier/user?page='
+if pages.total>1
+    ul.uk-pagination
+
+    if pages.current==1
+        a.disabled 《
+    else
+        a(href="#{baseUrl}{pages.current-1}") 《
+    if pages.current == 1
+        a(class="active",href="#{baseUrl}1") 1
+    else
+        a(href="#{baseUrl}1") 1
+    if pages.total>7
+        if pages.current<=4
+            if pages.current==2
+                a(class="active",href="#{baseUrl}2") 2
+            else
+                a(href="#{baseUrl}2") 2
+            if pages.current == 3
+                a(class="active",href="#{baseUrl}3") 3
+            else
+                a(href="#{baseUrl}3") 3
+            if pages.current == 4
+                a(class="active",href="#{baseUrl}4") 4
+            else
+                a(href="#{baseUrl}4") 4
+            if pages.current == 5
+                a(class="active",href="#{baseUrl}5") 5
+            else
+                a(href="#{baseUrl}5") 5
+            a ……
+            a(href="#{baseUrl}#{pages.total}") #{pages.total}
+        else
+            if pages.current <= pages.total-4
+                a ……
+                a(href="#{baseUrl}#{pages.current-1}") #{pages.current-1}
+                a(class="active",href="#{baseUrl}#{pages.current}") #{pages.current}
+                a(href="#{baseUrl}#{pages.current+1}") #{pages.current+1}
+                a(href="#{baseUrl}#{pages.current+2}") #{pages.current+2}
+                a ……
+                a(href="#{baseUrl}#{pages.total}") #{pages.total}
+            else
+                a ……
+                if pages.current == pages.total-4
+                    a(class="active",href="#{baseUrl}pages.total-4") pages.total-4
+                else
+                    a(href="#{baseUrl}pages.total-4")
+                if pages.current == pages.total - 3
+                    a(class="active",href="#{baseUrl}pages.total-3") pages.total-3
+                else
+                    a(href="#{baseUrl}pages.total-3")
+                if pages.current == pages.total - 2
+                    a(class="active",href="#{baseUrl}pages.total-2") pages.total-2
+                else
+                    a(href="#{baseUrl}pages.total-2")
+                if pages.current == pages.total - 1
+                    a(class="active",href="#{baseUrl}pages.total-1") pages.total-1
+                else
+                    a(href="#{baseUrl}pages.total-1")
+                if pages.current == pages.total
+                    a(class="active",href="#{baseUrl}pages.total") pages.total
+                else
+                    a(href="#{baseUrl}pages.total")
+    else
+        if pages.current == 2
+            a(class="active",href="#{baseUrl}2") 2
+        else
+            a(href="#{baseUrl}2") 2
+        if pages.total>2
+            if pages.current == 3
+                a(class="active",href="#{baseUrl}3") 3
+            else
+                a(href="#{baseUrl}3")
+        if pages.total > 3
+            if pages.current == 4
+                a(class="active",href="#{baseUrl}4") 4
+            else
+                a(href="#{baseUrl}4")
+        if pages.total > 4
+            if pages.current == 5
+                a(class="active",href="#{baseUrl}5") 5
+            else
+                a(href="#{baseUrl}5")
+        if pages.total > 5
+            if pages.current == 6
+                a(class="active",href="#{baseUrl}6") 6
+            else
+                a(href="#{baseUrl}6")
+        if pages.total > 6
+            if pages.current == 7
+                a(class="active",href="#{baseUrl}7") 7
+            else
+                a(href="#{baseUrl}7")
+    if pages.current==pages.total
+        a(class="disabled",href="#{baseUrl}#{pages.current+1}") 》
+    else
+        a(href="#{baseUrl}#{pages.current+1}") 》

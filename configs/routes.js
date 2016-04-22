@@ -23,7 +23,7 @@ module.exports = function (app) {
         .all('/logout', account.logout);
 
     app.get('*',function(req,res){
-        res.render('404');
+        res.render('common/404');
     });
 
     app.use(function (err, req, res) {
