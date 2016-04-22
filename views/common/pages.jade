@@ -2,96 +2,147 @@
 if pages.total>1
     ul.uk-pagination
 
-    if pages.current==1
-        a.disabled 《
-    else
-        a(href="#{baseUrl}{pages.current-1}") 《
-    if pages.current == 1
-        a(class="active",href="#{baseUrl}1") 1
-    else
-        a(href="#{baseUrl}1") 1
-    if pages.total>7
-        if pages.current<=4
-            if pages.current==2
-                a(class="active",href="#{baseUrl}2") 2
-            else
-                a(href="#{baseUrl}2") 2
-            if pages.current == 3
-                a(class="active",href="#{baseUrl}3") 3
-            else
-                a(href="#{baseUrl}3") 3
-            if pages.current == 4
-                a(class="active",href="#{baseUrl}4") 4
-            else
-                a(href="#{baseUrl}4") 4
-            if pages.current == 5
-                a(class="active",href="#{baseUrl}5") 5
-            else
-                a(href="#{baseUrl}5") 5
-            a ……
-            a(href="#{baseUrl}#{pages.total}") #{pages.total}
+        if pages.current==1
+            li.uk-disabled
+                span
+                    i.uk-icon-angle-double-left
         else
-            if pages.current <= pages.total-4
-                a ……
-                a(href="#{baseUrl}#{pages.current-1}") #{pages.current-1}
-                a(class="active",href="#{baseUrl}#{pages.current}") #{pages.current}
-                a(href="#{baseUrl}#{pages.current+1}") #{pages.current+1}
-                a(href="#{baseUrl}#{pages.current+2}") #{pages.current+2}
-                a ……
-                a(href="#{baseUrl}#{pages.total}") #{pages.total}
-            else
-                a ……
-                if pages.current == pages.total-4
-                    a(class="active",href="#{baseUrl}pages.total-4") pages.total-4
-                else
-                    a(href="#{baseUrl}pages.total-4")
-                if pages.current == pages.total - 3
-                    a(class="active",href="#{baseUrl}pages.total-3") pages.total-3
-                else
-                    a(href="#{baseUrl}pages.total-3")
-                if pages.current == pages.total - 2
-                    a(class="active",href="#{baseUrl}pages.total-2") pages.total-2
-                else
-                    a(href="#{baseUrl}pages.total-2")
-                if pages.current == pages.total - 1
-                    a(class="active",href="#{baseUrl}pages.total-1") pages.total-1
-                else
-                    a(href="#{baseUrl}pages.total-1")
-                if pages.current == pages.total
-                    a(class="active",href="#{baseUrl}pages.total") pages.total
-                else
-                    a(href="#{baseUrl}pages.total")
-    else
-        if pages.current == 2
-            a(class="active",href="#{baseUrl}2") 2
+            li
+                a(href="#{baseUrl}{pages.current-1}")
+                    i.uk-icon-angle-double-left
+        if pages.current == 1
+            li.uk-active
+                span 1
         else
-            a(href="#{baseUrl}2") 2
-        if pages.total>2
-            if pages.current == 3
-                a(class="active",href="#{baseUrl}3") 3
+            li
+                a(href="#{baseUrl}1") 1
+        if pages.total>7
+            if pages.current<=4
+                if pages.current==2
+                    li.uk-active
+                        span 2
+                else
+                    li
+                        a(href="#{baseUrl}2") 2
+                if pages.current == 3
+                    li.uk-active
+                        span 3
+                else
+                    li
+                        a(href="#{baseUrl}3") 3
+                if pages.current == 4
+                    li.uk-active
+                        span 4
+                else
+                    li
+                        a(href="#{baseUrl}4") 4
+                if pages.current == 5
+                    li.uk-active
+                        span 5
+                else
+                    li
+                        a(href="#{baseUrl}5") 5
+                li
+                    span
+                        | ……
+                li
+                    a(href="#{baseUrl}#{pages.total}") #{pages.total}
             else
-                a(href="#{baseUrl}3")
-        if pages.total > 3
-            if pages.current == 4
-                a(class="active",href="#{baseUrl}4") 4
+                if pages.current <= pages.total-4
+                    li
+                        span ……
+                    li
+                        a(href="#{baseUrl}#{pages.current-1}") #{baseUrl}#{pages.current-1}
+                    li.uk-active
+                        span #{baseUrl}#{pages.current}
+                    li
+                        a(href="#{baseUrl}#{pages.current + 1}") #{baseUrl}#{pages.current + 1}
+                    li
+                        a(href="#{baseUrl}#{pages.current + 2}") #{baseUrl}#{pages.current + 2}
+                    li
+                        span ……
+                    li
+                        a(href="#{baseUrl}#{pages.total}") #{baseUrl}#{pages.total}
+                else
+                    li
+                        span ……
+                    if pages.current == pages.total-4
+                        li.uk-active
+                            span #{pages.total - 4}
+                    else
+                        li
+                            a(href="#{baseUrl}pages.total-4") #{pages.total - 4}
+                    if pages.current == pages.total - 3
+                        li.uk-active
+                            span 3 #{pages.total - 3}
+                    else
+                        li
+                            a(href="#{baseUrl}pages.total-3") #{pages.total - 3}
+                    if pages.current == pages.total - 2
+                        li.uk-active
+                            span #{pages.total - 2}
+                    else
+                        li
+                            a(href="#{baseUrl}pages.total-2") #{pages.total - 2}
+                    if pages.current == pages.total - 1
+                        li.uk-active
+                            span #{pages.total - 1}
+                    else
+                        li
+                            a(href="#{baseUrl}pages.total-1") #{pages.total - 1}
+                    if pages.current == pages.total
+                        li.uk-active
+                            span #{pages.total}
+                    else
+                        li
+                            a(href="#{baseUrl}pages.total") #{pages.total}
+        else
+            if pages.current == 2
+                li.uk-active
+                    span 2
             else
-                a(href="#{baseUrl}4")
-        if pages.total > 4
-            if pages.current == 5
-                a(class="active",href="#{baseUrl}5") 5
-            else
-                a(href="#{baseUrl}5")
-        if pages.total > 5
-            if pages.current == 6
-                a(class="active",href="#{baseUrl}6") 6
-            else
-                a(href="#{baseUrl}6")
-        if pages.total > 6
-            if pages.current == 7
-                a(class="active",href="#{baseUrl}7") 7
-            else
-                a(href="#{baseUrl}7")
-    if pages.current==pages.total
-        a(class="disabled",href="#{baseUrl}#{pages.current+1}") 》
-    else
-        a(href="#{baseUrl}#{pages.current+1}") 》
+                li
+                    a(href="#{baseUrl}2") 2
+            if pages.total>2
+                if pages.current == 3
+                    li.uk-active
+                        span 3
+                else
+                    li
+                        a(href="#{baseUrl}3") 3
+            if pages.total > 3
+                if pages.current == 4
+                    li.uk-active
+                        span 4
+                else
+                    li
+                        a(href="#{baseUrl}4") 4
+            if pages.total > 4
+                if pages.current == 5
+                    li.uk-active
+                        span 5
+                else
+                    li
+                        a(href="#{baseUrl}5") 5
+            if pages.total > 5
+                if pages.current == 6
+                    li.uk-active
+                        span 6
+                else
+                    li
+                        a(href="#{baseUrl}6") 6
+            if pages.total > 6
+                if pages.current == 7
+                    li.uk-active
+                        span 7
+                else
+                    li
+                        a(href="#{baseUrl}7") 7
+        if pages.current==pages.total
+            li.uk-disabled
+                span
+                    i.uk-icon-angle-double-right
+        else
+            li
+                a(href="#{baseUrl}#{pages.current+1}")
+                    i.uk-icon-angle-double-right
