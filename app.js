@@ -12,8 +12,7 @@ const mongoStore = require('connect-mongo')(session);
 const join = require('path').join;
 
 const app = express();
-
-GLOBAL.database = 'mongodb://127.0.0.1:27017/yunda';
+const DB = 'mongodb://127.0.0.1:27017/yunda';  //mongodb server
 
 app
     .set('env','test')
@@ -28,22 +27,15 @@ app
     .use(session({
         resave:true,
         saveUninitialized:true,
-        secret: 'shangxinbo',
+        secret: 'carry up',
         store: new mongoStore({
-            url: GLOBAL.database,
+            url: DB,
             autoRemove: 'interval',
-            autoRemoveInterval: 20  // In minutes. Default
+            autoRemoveInterval: 30  // In minutes. Default
         })
     }));
 
 module.exports = app;
 
 require('./configs/routes')(app);
-
-connect()
-  .on('error', console.log)
-  .on('disconnected', connect);
-function connect () {
-    let options = { server: { socketOptions: { keepAlive: 1 } } };
-    return mongoose.connect(GLOBAL.database, options).connection;
-}
+mongoose.connect(DB);

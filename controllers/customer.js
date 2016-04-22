@@ -1,44 +1,63 @@
 
+
 'use strict';
 
 const Customer = require('../models/Customer');
-const FN = require('../models/functions');
+const FN = require('../classes/functions');
 
-exports.list = function(req,res){
-    Customer.find({},function(err,doc){
-        console.log(err);
-        console.log(doc);
-        res.render('customer_list',{
-            title:'客户管理',
+exports.list = function (req, res) {
+    let page = req.query.page ? req.query.page : 1;
+    page--;
+    let pageNum = 10;
+
+    Customer.getLists( page * pageNum, pageNum, function (err, doc) {
+        res.render('customer_list', {
+            title: '客户管理',
             customers: doc
         });
     });
 };
-exports.add = function(req,res){
+
+exports.add = function (req, res) {
     let name = req.query.name;
     let tel = req.query.tel;
     let time = new Date().getTime();
     let town = req.query.town;
-    let customerEntity = new Customer({
-        name: name,
-        tel : tel,
-        town: town,
-        useful: 1,
-        join_time : time,
-        last_time: time
-    });
-    customerEntity.save(function(err,data){
-        if(err)console.log(err);
-        if(data){
-            res.send(FN.resData(0,'添加成功',{}));
-        }
-    });
+
+    if(name && FN.isRealPhone(tel)){
+        Customer.add({
+            name: name,
+            tel: tel,
+            town: town ? town : 1,   // default '菜园村'
+            useful: 1,
+            join_time: time,
+            last_time: time
+        },function(err,data){
+            if (data) {
+                res.send(FN.resData(0, '添加成功', data));
+            }else{
+                res.send(FN.resData(1, err.toString()));
+            }
+        });
+    }else{
+        res.send(FN.resData(1, '参数格式不正确，添加失败'));
+    }
 };
-exports.del = function(req,res){
+
+exports.del = function (req, res) {
     let id = req.query.id;
-    Customer.remove({_id:id},function(err,data){
-        res.send(FN.resData(0,'删除成功',{}));
-    })
+    if(id){
+        Customer.delById(id,function(err,data){
+            if(data){
+                res.send(FN.resData(0, '删除成功'));
+            }else{
+                res.send(FN.resData(1, err.toString()));
+            }
+        });
+    }else {
+        res.send(FN.resData(2, '没有指定删除id，删除失败'));
+    }
+
 };
 
 

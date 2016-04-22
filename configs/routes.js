@@ -14,7 +14,7 @@ module.exports = function (app) {
         .get('/upload/',account.isLogged, upload.showtpl)
         /*.get('/sms/sendSingle', account.isLogged, sms.sendSingle)
         .get('/sms/list', account.isLogged, sms.showtpl)*/
-        .get('/courier/list', account.isLogged, courier.list)
+        //.get('/courier/list', account.isLogged, courier.list)
         .get('/courier/user', account.isLogged, customer.list)
         .get('/courier/user/add*', account.isLogged, customer.add)
         .get('/courier/user/del*', account.isLogged, customer.del)
