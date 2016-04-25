@@ -67,6 +67,23 @@ exports.del = function (req, res) {
 
 };
 
+exports.edit = function(req,res){
+    let getId = req.query.id;
+    let postId = req.body.id;
+    if(getId){
+        Customer.findById(getId,function(err,doc){
+            res.render('customer/edit',{data:doc});
+        });
+    }else{
+        if(postId){
+
+        }else{
+            
+        }
+    }
+    
+};
+
 
 
 

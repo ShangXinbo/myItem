@@ -27,6 +27,16 @@ Schema.statics.getLists = function (start, count, cb) {
 };
 
 /*
+ * @param start Number
+ * @param end Nunber
+ * @param cb Function
+ * */
+Schema.statics.findById = function (id, cb) {
+    this.findOne({_id:id}, cb);
+};
+
+
+/*
 * @param id ObjectId
 * */
 Schema.statics.delByIdArr = function(arr,cb){
