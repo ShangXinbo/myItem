@@ -15,6 +15,21 @@ module.exports = {
         }
     },
 
+    dateFormat: function(num){
+        if(num){
+            let date = new Date(num);
+            let Y = date.getFullYear(),
+                M = date.getMonth() + 1,
+                D = date.getDate(),
+                h = date.getHours(),
+                m = date.getMinutes(),
+                s = date.getSeconds();
+            return Y + '-' + M + '-' + D + ' ' + h + ':' + m + ':' + s;
+        }else{
+            return 'not a valid timeStamp';
+        }
+    },
+
     /*
      * 验证是否是有效手机号
      * 正则制作日期2015.12.16，
