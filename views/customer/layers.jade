@@ -31,20 +31,29 @@
 #edit_customer.uk-modal
     .uk-modal-dialog
         a.uk-modal-close.uk-close
-        form.uk-form(onsubmit='return false;')
-            .uk-form-row
-                label.uk-form-label(for='name') 姓名:
-                input(type='text', name='name', placeholder='')
-            .uk-form-row
-                label.uk-form-label(for='tel') 电话:
-                input(type='tel', name='tel', placeholder='')
-            .uk-form-row
-                label.uk-form-label(for='town') 居住地:
-                select(name='town')
-                    option(value='1') 菜园村
-                    option(value='2') 杨各庄
-            .uk-form-row
-                label.uk-form-label(for='marks') 备注:
-                textarea(name='marks')
-            .uk-form-row
-                button.uk-button 确定
+        .uk-modal-header
+            h3  修改用户信息
+        //.uk-alert.uk-alert-danger
+        .uk-margin.uk-width-1-2.uk-container-center
+            form.uk-form.uk-form-horizontal(onsubmit='return false;')
+                .uk-form-row
+                    label.uk-form-label(for='name') 姓名:
+                    .uk-form-controls
+                        input.uk-form-width-large(type='text', name='name', placeholder='')
+                .uk-form-row
+                    label.uk-form-label(for='tel') 电话:
+                    .uk-form-controls
+                        input.uk-form-width-large(type='tel', maxlength="11" name='tel', placeholder='')
+                .uk-form-row
+                    label.uk-form-label(for='town') 居住地:
+                    .uk-form-controls
+                        select.uk-form-width-large(name='town')
+                            option(value='1') 菜园村
+                            option(value='2') 杨各庄
+                .uk-form-row
+                    label.uk-form-label(for='marks') 备注:
+                    .uk-form-controls
+                        textarea.uk-form-width-large(name='marks')
+        .uk-modal-footer.uk-text-right
+            button.uk-button(data-close) 取消
+            button.uk-button.uk-button-primary 确定

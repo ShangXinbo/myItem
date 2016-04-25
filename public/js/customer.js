@@ -102,11 +102,6 @@ $(function(){
         });
     });
 
-    $('[data-do="edit"]').on('click',function(event){
-        var id = $(this).parent().data('id');
-        
-    });
-
 });
 
 function layer_alert(cont,msg){
