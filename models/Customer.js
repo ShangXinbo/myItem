@@ -29,8 +29,8 @@ Schema.statics.getLists = function (start, count, cb) {
 /*
 * @param id ObjectId
 * */
-Schema.statics.delById = function(id,cb){
-    this.remove({_id:id},cb);
+Schema.statics.delByIdArr = function(arr,cb){
+    this.remove({_id:{$in:arr}},cb);
 };
 
 /*

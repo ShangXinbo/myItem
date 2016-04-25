@@ -8,7 +8,7 @@ const FN = require('../classes/functions');
 exports.list = function (req, res) {
     let page = req.query.page ? req.query.page : 1;
     page--;
-    let pageNum = 10;
+    let pageNum = 15;
 
     Customer.getLists( page * pageNum, pageNum, function (err, doc) {
         Customer.count({},function(err,count){
@@ -52,9 +52,9 @@ exports.add = function (req, res) {
 };
 
 exports.del = function (req, res) {
-    let id = req.query.id;
-    if(id){
-        Customer.delById(id,function(err,data){
+    let arr = req.query.arr;
+    if(arr.length){
+        Customer.delByIdArr(arr,function(err,data){
             if(data){
                 res.send(FN.resData(0, '删除成功'));
             }else{
@@ -62,7 +62,7 @@ exports.del = function (req, res) {
             }
         });
     }else {
-        res.send(FN.resData(2, '没有指定删除id，删除失败'));
+        res.send(FN.resData(2, '没有指定可删除的数据id'));
     }
 
 };
