@@ -18,6 +18,7 @@ module.exports = function (app) {
         .get('/courier/user', account.isLogged, customer.list)
         .get('/courier/user/add*', account.isLogged, customer.add)
         .all('/courier/user/edit*', account.isLogged, customer.edit)
+        .get('/courier/user/orders*', account.isLogged, customer.userOrders)
         .get('/courier/user/del*', account.isLogged, customer.del)
         .get('/courier/account', account.isLogged, courier.list)
         .all('/login*', account.login)

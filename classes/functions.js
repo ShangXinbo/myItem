@@ -160,6 +160,15 @@ module.exports = {
         r1 = Math.Number(arg1.toString().replace(".", ""));
         r2 = Math.Number(arg2.toString().replace(".", ""));
         return (r1 / r2) * Math.pow(10, t2 - t1);
+    },
+
+    /*
+     * 输入框过滤html代码
+     */
+    removeHTMLTag: function(str) {
+        str = str.replace(/<\/?[^>]*>/g, ''); //去除HTML tag
+        str = str.replace(/[ | ]*\n/g, '\n'); //去除行尾空白
+        return str;
     }
 
 };

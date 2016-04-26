@@ -9,10 +9,10 @@ block content
                 div.uk-button.uk-margin-right(data-uk-modal="{target:'#add_customer'}") 添加用户
                 div.uk-button(disabled, id="del_customer") 批量删除
             .uk-width-1-3
-                form.uk-form.uk-float-right
+                form.uk-form.uk-float-right(id="user_search",method="get")
                     .uk-form-row
-                        input(type="text",placeholder="支持姓名,手机号的查询")
-                        button.uk-button(type="submit") 搜索
+                        input(type="text", name="keyword", placeholder="支持姓名,手机号的查询",value="#{keyword}")
+                        button.uk-button 搜索
         hr
         .uk-overflow-container
             - if(customers.length>0){
@@ -45,6 +45,8 @@ block content
                             td #{FN.dateFormat(customers[i].last_time)}
                             td(data-id="#{customers[i]._id}")
                                 a(target="_blank", href="/courier/user/edit?id=#{customers[i]._id}") 修改
+                                span &nbsp;|&nbsp;
+                                a(target="_blank", href="/courier/user/edit?id=#{customers[i]._id}") 查看订单
                     - }
 
             include ../common/pages

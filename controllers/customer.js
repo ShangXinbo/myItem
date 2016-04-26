@@ -3,17 +3,31 @@
 'use strict';
 
 const Customer = require('../models/Customer');
+const Order = require('../models/Order');
 const FN = require('../classes/functions');
 
 exports.list = function (req, res) {
     let page = req.query.page ? req.query.page : 1;
     page--;
     let pageNum = 15;
+    let param = {};
+    let keyword = '';
+    if(req.query.keyword){
+        keyword = FN.removeHTMLTag(req.query.keyword);
+        if(keyword){
+            if(isNaN(keyword)){
+                param.name = {$regex:eval('/'+ keyword+ '/i')};
+            }else{
+                param.tel = {$regex:eval('/'+ keyword+ '/i')};
+            }
+        }
+    }
 
-    Customer.getLists( page * pageNum, pageNum, function (err, doc) {
-        Customer.count({},function(err,count){
+    Customer.getLists(param, page * pageNum, pageNum, function (err, doc) {
+        Customer.count(param,function(err,count){
             res.render('customer/list', {
                 title: '客户管理',
+                keyword: keyword,
                 customers: doc,
                 pages: {
                     current: parseInt(page) + 1,
@@ -81,9 +95,22 @@ exports.edit = function(req,res){
             
         }
     }
-    
 };
 
+
+exports.userOrders = function(req,res){
+    let getId = req.query.id;
+    if(getId){
+        Order.getUserOrders(getId,function(err,doc){
+            res.render('customer/orders',{
+                userId: getId,
+                orders: doc
+            });
+        });
+    }else{
+        console.log('');
+    }
+};
 
 
 

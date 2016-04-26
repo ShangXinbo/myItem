@@ -5,12 +5,30 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const courierSchema = new mongoose.Schema({
-    name: String,
-    tel: String,
-    town: Number,
-    join_time:Number,
-    last_time: Number
+const Schema = new mongoose.Schema({
+    code: Number,
+    company: Number,
+    owner: String,
+    pick_way: Number,
+    status: Number,
+    in_time:Number,
+    out_time: Number
 });
 
-let Courier = mongoose.model('Courier', courierSchema);
+/*
+ * @param start Number
+ * @param end Nunber
+ * @param cb Function
+ * */
+Schema.statics.getUserOrders = function (userId,cb) {
+    this.find({_id:userId}, cb);
+};
+
+
+
+
+
+
+const Order = mongoose.model('Order', Schema);
+
+module.exports = Order;

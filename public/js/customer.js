@@ -102,12 +102,22 @@ $(function(){
         });
     });
 
+    $('#user_search').on('submit',function(event){
+        var keyword = $(this).find('input').val();
+        if(keyword){
+            return true;
+        }else{
+            return false;
+        }
+    });
+
+
+
 });
 
 function layer_alert(cont,msg){
     var dom = '<div class="uk-alert uk-alert-danger">'+ msg + '</div>';
     $(cont).find('.uk-modal-header').next('.uk-alert').remove();
-    console.log($(cont).find('.uk-modal-header'));
     $(cont).find('.uk-modal-header').after(dom);
 }
 function isRealPhone(num){

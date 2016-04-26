@@ -1,0 +1,28 @@
+extends ../common/layout
+
+block content
+    .uk-container.uk-container-center
+
+        include ../common/nav
+        article.uk-article
+            h2.uk-article-title #{userId}
+            hr.uk-article-divider
+            .uk-overflow-container
+                - if(orders.length>0){
+                table.uk-table.uk-table-striped
+                    thead
+                        tr
+                            th 订单编号
+                            th 收取时间
+                            th 取走时间
+                    tbody
+                        - for(var i=0;i<orders.length;i++){
+                        tr
+                            td #{orders[i].code}
+                            td #{orders[i].in_time}
+                            td #{orders[i].out_time}
+                        - }
+                - }else{
+                | 没有数据
+                - }
+    script(src='/js/customer.js')

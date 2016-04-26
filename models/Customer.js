@@ -22,8 +22,9 @@ const Schema = new mongoose.Schema({
  * @param end Nunber
  * @param cb Function
  * */
-Schema.statics.getLists = function (start, count, cb) {
-    this.find({}, cb).skip(start).limit(count);
+Schema.statics.getLists = function (param, start, count, cb) {
+    console.log(param);
+    this.find(param, cb).skip(start).limit(count);
 };
 
 /*
