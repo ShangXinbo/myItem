@@ -36,6 +36,5 @@ app
     }));
 
 module.exports = app;
-
 require('./configs/routes')(app);
 mongoose.connect(DB);

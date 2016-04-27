@@ -7,12 +7,26 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const Schema = new mongoose.Schema({
+
+/*
+* children schema of Customer
+* */
+const OrderSchema = new mongoose.Schema({
+    code: Number,
+    company: Number,
+    pick_way: Number,
+    status: Number,
+    in_time:Number,
+    out_time: Number
+});
+
+const CustomerSchema = new mongoose.Schema({
     name: String,
     tel: String,
     town: Number,
     useful: Boolean,
     marks: String,
+    orders:[OrderSchema],   //sub-document
     join_time: Number,
     last_time: Number
 });
@@ -22,8 +36,7 @@ const Schema = new mongoose.Schema({
  * @param end Nunber
  * @param cb Function
  * */
-Schema.statics.getLists = function (param, start, count, cb) {
-    console.log(param);
+CustomerSchema.statics.getUserLists = function (param, start, count, cb) {
     this.find(param, cb).skip(start).limit(count);
 };
 
@@ -32,7 +45,7 @@ Schema.statics.getLists = function (param, start, count, cb) {
  * @param end Nunber
  * @param cb Function
  * */
-Schema.statics.findById = function (id, cb) {
+CustomerSchema.statics.findUserById = function (id, cb) {
     this.findOne({_id:id}, cb);
 };
 
@@ -40,20 +53,36 @@ Schema.statics.findById = function (id, cb) {
 /*
 * @param id ObjectId
 * */
-Schema.statics.delByIdArr = function(arr,cb){
+CustomerSchema.statics.delUsersByIdArr = function(arr,cb){
     this.remove({_id:{$in:arr}},cb);
 };
 
 /*
 * add customer
 * */
-Schema.statics.add = function(obj,cb){
+CustomerSchema.statics.addUser = function(obj,cb){
+    this.create(obj,cb);
+};
+
+
+/*
+ * getAllUserOrders
+ * */
+CustomerSchema.statics.getAllOrders = function(id,obj,cb){
     this.create(obj,cb);
 };
 
 /*
+ * delete Order
+ * */
+CustomerSchema.statics.delOrder = function(id,obj,cb){
+    this.create(obj,cb);
+};
+
+
+/*
  * Collection Name customers
  * */
-const Customer = mongoose.model('customer', Schema);
+const Customer = mongoose.model('customer', CustomerSchema);
 
 module.exports = Customer;

@@ -3,7 +3,6 @@
 'use strict';
 
 const Customer = require('../models/Customer');
-const Order = require('../models/Order');
 const FN = require('../classes/functions');
 
 exports.list = function (req, res) {
@@ -23,7 +22,7 @@ exports.list = function (req, res) {
         }
     }
 
-    Customer.getLists(param, page * pageNum, pageNum, function (err, doc) {
+    Customer.getUserLists(param, page * pageNum, pageNum, function (err, doc) {
         Customer.count(param,function(err,count){
             res.render('customer/list', {
                 title: '客户管理',
@@ -46,7 +45,7 @@ exports.add = function (req, res) {
     let town = req.query.town;
 
     if(name && FN.isRealPhone(tel)){
-        Customer.add({
+        Customer.addUser({
             name: name,
             tel: tel,
             town: town ? town : 1,   // default '菜园村'
@@ -68,7 +67,7 @@ exports.add = function (req, res) {
 exports.del = function (req, res) {
     let arr = req.query.arr;
     if(arr.length){
-        Customer.delByIdArr(arr,function(err,data){
+        Customer.delUsersByIdArr(arr,function(err,data){
             if(data){
                 res.send(FN.resData(0, '删除成功'));
             }else{
@@ -85,7 +84,7 @@ exports.edit = function(req,res){
     let getId = req.query.id;
     let postId = req.body.id;
     if(getId){
-        Customer.findById(getId,function(err,doc){
+        Customer.findUserById(getId,function(err,doc){
             res.render('customer/edit',{data:doc});
         });
     }else{
@@ -97,19 +96,35 @@ exports.edit = function(req,res){
     }
 };
 
-
 exports.userOrders = function(req,res){
     let getId = req.query.id;
     if(getId){
-        Order.getUserOrders(getId,function(err,doc){
-            res.render('customer/orders',{
-                userId: getId,
-                orders: doc
-            });
+        Customer.findUserById(getId,function(err,doc){
+            res.render('customer/orders',{data:doc});
         });
     }else{
         console.log('');
     }
+};
+
+
+exports.addOrder = function(req,res){
+    let getId = req.query.id;
+    let code = req.query.code;
+    let company = req.query.company;
+    let now = new Date().getTime();
+    Customer.findUserById(getId,function(err,doc){
+        doc.orders.push({
+            code: code,
+            company: company,
+            pick_way: 0,
+            status: 0,
+            in_time : now
+        });
+        doc.save(function(){
+            res.send(FN.resData(0, '添加成功'));
+        });
+    });
 };
 
 

@@ -4,25 +4,32 @@ block content
     .uk-container.uk-container-center
 
         include ../common/nav
-        article.uk-article
-            h2.uk-article-title #{userId}
-            hr.uk-article-divider
+        article.uk-article(data-id="#{data._id}")
+            .uk-clearfix
+                h2.uk-float-left #{data.name}
+                .uk-button.uk-float-right(data-uk-modal="{target:'#add_order'}") 添加新订单
+            hr.uk-article-divider.uk-margin
             .uk-overflow-container
-                - if(orders.length>0){
+                - if(data.orders.length>0){
                 table.uk-table.uk-table-striped
                     thead
                         tr
                             th 订单编号
-                            th 收取时间
-                            th 取走时间
+                            th 快递公司
+                            th 取/送
+                            th 到库时间
+                            th 状态
                     tbody
-                        - for(var i=0;i<orders.length;i++){
+                        - for(var i=0;i<data.orders.length;i++){
                         tr
-                            td #{orders[i].code}
-                            td #{orders[i].in_time}
-                            td #{orders[i].out_time}
+                            td #{data.orders[i].code}
+                            td #{data.orders[i].company}
+                            td #{data.orders[i].pick_way}
+                            td #{data.orders[i].in_time}
+                            td #{data.orders[i].status}
                         - }
                 - }else{
                 | 没有数据
                 - }
+    include layers
     script(src='/js/customer.js')

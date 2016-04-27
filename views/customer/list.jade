@@ -46,7 +46,7 @@ block content
                             td(data-id="#{customers[i]._id}")
                                 a(target="_blank", href="/courier/user/edit?id=#{customers[i]._id}") 修改
                                 span &nbsp;|&nbsp;
-                                a(target="_blank", href="/courier/user/edit?id=#{customers[i]._id}") 查看订单
+                                a(target="_blank", href="/courier/user/orders?id=#{customers[i]._id}") 查看订单
                     - }
 
             include ../common/pages

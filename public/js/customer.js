@@ -45,6 +45,44 @@ $(function(){
         UIkit.modal("#add_customer").hide();
     });
 
+
+    //添加用户
+    $('#add_order').on('click', '.uk-button-primary',function(event){
+        var Cont = $('#add_order');
+        var id = $('.uk-article').data('id');
+        var code = Cont.find('input[name="code"]').val(),
+            company = Cont.find('select[name="company"]').val();
+
+        if(!code){
+            layer_alert(Cont,'快递号是需要填写的');
+            Cont.find('input[name="code"]').addClass('uk-form-danger');
+            return false;
+        }else{
+            Cont.find('input[name="code"]').removeClass('uk-form-danger');
+        }
+        $.ajax({
+            url: '/courier/user/orderadd',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                id:id,
+                code:code,
+                company:company
+            },
+            success:function(data){
+                if(data.status==0){
+                    window.location.reload();
+                }
+            },
+            error:function(err){
+                console.log(err);
+            }
+        })
+    }).on('click','[data-close]',function(){
+        UIkit.modal("#add_order").hide();
+    });
+
+
     //批量删除用户
     $('table').on('click','th input[type="checkbox"]',function(event){
         var checked = $(this)[0].checked;

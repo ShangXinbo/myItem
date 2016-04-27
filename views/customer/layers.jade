@@ -28,6 +28,7 @@
         .uk-modal-footer.uk-text-right
             button.uk-button(data-close) 取消
             button.uk-button.uk-button-primary 确定
+
 #edit_customer.uk-modal
     .uk-modal-dialog
         a.uk-modal-close.uk-close
@@ -54,6 +55,30 @@
                     label.uk-form-label(for='marks') 备注:
                     .uk-form-controls
                         textarea.uk-form-width-large(name='marks')
+        .uk-modal-footer.uk-text-right
+            button.uk-button(data-close) 取消
+            button.uk-button.uk-button-primary 确定
+
+#add_order.uk-modal
+    .uk-modal-dialog
+        a.uk-modal-close.uk-close
+        .uk-modal-header
+            h3  添加新订单
+        //.uk-alert.uk-alert-danger
+        .uk-margin.uk-width-2-3.uk-container-center
+            form.uk-form.uk-form-stacked(onsubmit='return false;')
+                .uk-form-row
+                    label.uk-form-label(for='code') 订单号:
+                    .uk-form-controls
+                        input.uk-form-width-large(type='number', name='code', placeholder='')
+                .uk-form-row
+                    label.uk-form-label(for='company') 快递公司:
+                    .uk-form-controls
+                        select.uk-form-width-large(name='company')
+                            option(value='1') 韵达
+                            option(value='2') 圆通
+                            option(value='3') 申通
+                            option(value='4') EMS
         .uk-modal-footer.uk-text-right
             button.uk-button(data-close) 取消
             button.uk-button.uk-button-primary 确定
