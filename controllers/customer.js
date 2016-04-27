@@ -3,6 +3,7 @@
 'use strict';
 
 const Customer = require('../models/Customer');
+const map = require('../configs/map.js');
 const FN = require('../classes/functions');
 
 exports.list = function (req, res) {
@@ -114,20 +115,14 @@ exports.addOrder = function(req,res){
     let company = req.query.company;
     let now = new Date().getTime();
 
-    //TODO company 配置文件转化
-
-    //TODO 配送方式文字转化
-
-    //TODO 订单状态转化
-
     //TODO 入库时间转化
 
     Customer.findUserById(getId,function(err,doc){
         doc.orders.push({
             code: code,
-            company: company,
-            pick_way: 0,
-            status: 0,
+            company: map.company[company],
+            pick_way: map.pick_way[0],
+            status: map.order_status[0],
             in_time : now
         });
         doc.save(function(){
