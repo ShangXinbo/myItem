@@ -16,12 +16,12 @@ block content
                         tr
                             th 订单编号
                             th 快递公司
-                            th 取/送
+                            th 配送方式
                             th 到库时间
                             th 状态
                     tbody
                         - for(var i=0;i<data.orders.length;i++){
-                        tr
+                        tr   //TODO 如果是新订单新样式
                             td #{data.orders[i].code}
                             td #{data.orders[i].company}
                             td #{data.orders[i].pick_way}

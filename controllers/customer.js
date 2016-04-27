@@ -113,6 +113,15 @@ exports.addOrder = function(req,res){
     let code = req.query.code;
     let company = req.query.company;
     let now = new Date().getTime();
+
+    //TODO company 配置文件转化
+
+    //TODO 配送方式文字转化
+
+    //TODO 订单状态转化
+
+    //TODO 入库时间转化
+
     Customer.findUserById(getId,function(err,doc){
         doc.orders.push({
             code: code,

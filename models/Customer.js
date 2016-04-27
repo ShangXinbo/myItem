@@ -18,6 +18,7 @@ const OrderSchema = new mongoose.Schema({
     status: Number,
     in_time:Number,
     out_time: Number
+    //TODO 信息添加的时间,用于数据排序
 });
 
 const CustomerSchema = new mongoose.Schema({
