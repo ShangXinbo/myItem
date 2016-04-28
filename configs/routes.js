@@ -4,6 +4,7 @@ const uploads = require('multer')({dest: 'uploadfile'});
 const upload = require('../controllers/upload');
 const order = require('../controllers/order');
 const customer = require('../controllers/customer');
+const sms = require('../controllers/sms');
 const index = require('../controllers/index');
 const account = require('../controllers/account');
 
