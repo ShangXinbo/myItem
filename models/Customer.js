@@ -45,6 +45,7 @@ CustomerSchema.statics.findByTel = function (tel, cb) {
     this.findOne({tel:tel}, cb);
 };
 
+
 /*
 * @param id ObjectId
 * */
@@ -62,6 +63,6 @@ CustomerSchema.statics.add = function(obj,cb){
 /*
  * Collection Name customers
  * */
-const Customer = mongoose.model('customer', CustomerSchema);
+const Customer = mongoose.model('Customer', CustomerSchema);
 
 module.exports = Customer;

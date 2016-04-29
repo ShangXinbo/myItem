@@ -1,0 +1,95 @@
+$(function() {
+    //批量删除用户
+    $('table').on('click','th input[type="checkbox"]',function(event){
+        var checked = $(this)[0].checked;
+        var tdcheck = $('table td input[type="checkbox"]');
+        if(checked){
+            for(var i=0;i<tdcheck.length;i++){
+                tdcheck[i].checked = 'checked';
+            }
+        }else{
+            for(var i=0;i<tdcheck.length;i++){
+                tdcheck[i].checked = '';
+            }
+        }
+    }).on('click','td input[type="checkbox"]',function(event){
+        var checked = $(this)[0].checked;
+        if(checked){
+            $(this)[0].checked = 'checked';
+        }else{
+            $(this)[0].checked = '';
+        }
+    });
+
+    $('#sendmsg').on('click',function(event){
+        //TODO
+        var checked = $('table td input[type="checkbox"]');
+        var arr = [];
+        for(var i=0;i<checked.length;i++){
+            if(checked[i].checked){
+                arr.push($(checked[i]).data('id'));
+            }
+        }
+        if(arr.length>0) {
+            UIkit.modal.confirm("您的操作不可返回，请确认是否删除选中数据", function () {
+                $.ajax({
+                    url: '/courier/order/del',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        arr: arr
+                    },
+                    success: function (data) {
+                        if (data.status == 0) {
+                            window.location.reload();
+                        } else {
+                            console.log(err);
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            });
+        }else{
+
+        }
+    });
+
+    $('#del_customer').on('click',function(event){
+
+        //TODO 完成删除功能
+        UIkit.modal.confirm("您的操作不可返回，请确认是否删除选中数据", function(){
+            var checked = $('table td input[type="checkbox"]');
+            var arr = [];
+            for(var i=0;i<checked.length;i++){
+                if(checked[i].checked){
+                    arr.push($(checked[i]).data('id'));
+                }
+            }
+            if(arr.length>0){
+                $.ajax({
+                    url: '/courier/order/del',
+                    type: 'GET',
+                    dataType : 'json',
+                    data:{
+                        arr: arr
+                    },
+                    success:function(data){
+                        if(data.status==0){
+                            window.location.reload();
+                        }else{
+                            console.log(err);
+                        }
+                    },
+                    error: function(err){
+                        console.log(err);
+                    }
+                })
+            }else{
+
+            }
+
+        });
+    });
+});

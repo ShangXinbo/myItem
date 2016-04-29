@@ -3,15 +3,23 @@ block content
     .uk-container.uk-container-center
 
         include ../common/nav
-        .uk-grid
+
+        ul.uk-tab(data-uk-switch="{connect:'#my-id'}")
+            li(class=(status==0)?'uk-active':'')
+                a(href="/courier/orders?status=0") 未通知
+            li(class=(status==1)?'uk-active':'')
+                a(href="/courier/orders?status=1") 已通知
+            li(class=(status==2)?'uk-active':'')
+                a(href="/courier/orders?status=2") 已取单
+        .uk-grid.uk-margin
             .uk-width-2-3
+                div.uk-button.uk-margin-right(disabled, id="sendmsg") 发送短信通知
                 div.uk-button(disabled, id="del_customer") 批量删除
             .uk-width-1-3
                 form.uk-form.uk-float-right(id="user_search",method="get")
                     .uk-form-row
-                        input(type="text", name="keyword", placeholder="支持姓名,手机号的查询",value="#{keyword}")
+                        input(type="text", name="keyword", placeholder="支持快递单号，姓名,手机号的查询",value="#{keyword}")
                         button.uk-button 搜索
-        hr
         .uk-overflow-container
             - if(orders.length>0){
             table.uk-table.uk-table-striped
@@ -19,32 +27,28 @@ block content
                     tr
                         th
                             input(type="checkbox")
-                        th 用户id
-                        th 用户名
-                        th 手机号
-                        th 村区
-                        th 加入时间
-                        th 最近取单时间
+                        th 订单编号
+                        th 快递公司
+                        th 配送方式
+                        th 到库时间
+                        th 取件人
+                        th 电话
                         th 操作
                 tbody
-                    - for(var i=0;i<customers.length;i++){
-                        tr
-                            td
-                                input(type="checkbox",data-id="#{orders[i]._id}")
-                            td #{orders[i]._id}
-                            td #{orders[i].name}
-                            td #{orders[i].tel}
-                            td
-                                if(orders[i].town==1)
-                                    | 菜园村
-                                else if(orders[i].town==2)
-                                    | 杨各庄
-                            td #{FN.dateFormat(orders[i].join_time)}
-                            td #{FN.dateFormat(orders[i].last_time)}
-                            td(data-id="#{orders[i]._id}")
-                                a(target="_blank", href="/courier/user/edit?id=#{orders[i]._id}") 修改
-                                span &nbsp;|&nbsp;
-                                a(target="_blank", href="/courier/user/orders?id=#{orders[i]._id}") 查看订单
+                    - for(var i=0;i<orders.length;i++){
+                    tr
+                        td
+                            input(type="checkbox",data-id="#{orders[i]._id}")
+                        td #{orders[i].code}
+                        td #{orders[i].text_company}
+                        td #{orders[i].text_pick_way}
+                        td #{orders[i].format_in_time}
+                        td #{orders[i].owner.name}
+                        td #{orders[i].owner.tel}
+                        td(data-id="#{orders[i]._id}")
+                            a(target="_blank", href="/courier/user/edit?id=#{orders[i]._id}") 修改
+                            span &nbsp;|&nbsp;
+                            a(target="_blank", href="/courier/user/orders?id=#{orders[i]._id}") 查看订单
                     - }
 
             include ../common/pages
@@ -53,4 +57,4 @@ block content
                | 没有数据
             - }
 
-    script(src='/js/customer.js')
+    script(src='/js/order.js')

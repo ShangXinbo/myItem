@@ -8,8 +8,8 @@ const FN = require('../classes/functions');
 
 exports.orderList = function(req,res){
 
-    //TODO 订单列表的类型   未通知订单，已通知订单，已领取订单
     let page = req.query.page ? req.query.page : 1;
+    let status = req.query.status? req.query.status : 0;
     page--;
     let pageNum = 15;
     let param = {};
@@ -19,12 +19,12 @@ exports.orderList = function(req,res){
         if(keyword){
             if(isNaN(keyword)){
                 Customer.findByName(keyword,function(err,doc){
-                    getOrders({owner:doc._id});
+                    getOrders({owner:doc._id,status:status});
                 })
             }else{
                 if(FN.isRealPhone(keyword)){
                     Customer.findByTel(keyword,function(err,doc){
-                        getOrders({owner:doc._id});
+                        getOrders({owner:doc._id,status:status});
                     })
                 }else{
                     param.code = {$regex:eval('/'+ keyword+ '/i')};
@@ -32,21 +32,22 @@ exports.orderList = function(req,res){
             }
         }
     }else{
-        getOrders({});
+        getOrders({status:status});
     }
 
     function getOrders(param){
-        Order.getLists(param, page * pageNum, pageNum, function (err, doc) {
-            Customer.count(param,function(err,count){
+
+        Order.find(param).skip(page * pageNum).limit(pageNum).populate('owner').exec(function(err,doc){
+            Order.count(param,function(err,count){
                 res.render('order/list', {
                     title: '订单管理',
                     keyword: keyword,
                     orders: doc,
+                    status: status,
                     pages: {
                         current: parseInt(page) + 1,
                         total : Math.ceil(count/pageNum)
-                    },
-                    FN : FN
+                    }
                 });
             });
         });

@@ -8,14 +8,15 @@
 
 const map = require('../configs/map.js');
 const FN = require('../classes/functions.js');
+const Customer = require('../models/Customer');
 const mongoose = require('mongoose');
 
 /*
 * children schema of Customer
 * */
 const Schema = new mongoose.Schema({
-    code: Number,
-    owner: mongoose.Schema.Types.ObjectId,
+    code: String,
+    owner: {type: mongoose.Schema.Types.ObjectId, ref : 'Customer'},
     company: Number,
     pick_way: Number,
     status: Number,
@@ -38,7 +39,6 @@ Schema.virtual('format_in_time').get(function(){
     return FN.dateFormat(this.in_time);
 });
 
-
 Schema.statics.getLists = function (param, start, count, cb) {
     this.find(param, cb).skip(start).limit(count);
 };
@@ -54,5 +54,5 @@ Schema.static.del = function(id,cb){
 };
 
 
-const Order = mongoose.model('order', Schema);
+const Order = mongoose.model('Order', Schema);
 module.exports = Order;
