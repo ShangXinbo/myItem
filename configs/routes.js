@@ -20,6 +20,7 @@ module.exports = function (app) {
         .get('/courier/user/orderadd*', account.isLogged, customer.addOrder)
         .get('/courier/user/del*', account.isLogged, customer.del)
         .get('/courier/sms/edit*', account.isLogged, sms.edit)
+        .get('/courier/sms/send*', account.isLogged, sms.send)
         .get('/courier/orders', account.isLogged, order.orderList)
         .get('/courier/orders/del', account.isLogged, order.delOrder)
         .get('/courier/account', account.isLogged, sms.edit)

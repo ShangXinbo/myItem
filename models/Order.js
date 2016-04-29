@@ -43,7 +43,6 @@ Schema.statics.getLists = function (param, start, count, cb) {
     this.find(param, cb).skip(start).limit(count);
 };
 
-
 Schema.statics.findByUserId = function (id, cb) {
     this.find({owner:id}, cb);
 };

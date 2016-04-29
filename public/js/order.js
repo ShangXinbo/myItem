@@ -22,7 +22,6 @@ $(function() {
     });
 
     $('#sendmsg').on('click',function(event){
-        //TODO
         var checked = $('table td input[type="checkbox"]');
         var arr = [];
         for(var i=0;i<checked.length;i++){
@@ -31,9 +30,9 @@ $(function() {
             }
         }
         if(arr.length>0) {
-            UIkit.modal.confirm("您的操作不可返回，请确认是否删除选中数据", function () {
+            UIkit.modal.confirm("是否要发送"+ arr.length + "条订单短信通知", function () {
                 $.ajax({
-                    url: '/courier/order/del',
+                    url: '/courier/sms/send',
                     type: 'GET',
                     dataType: 'json',
                     data: {
@@ -52,7 +51,7 @@ $(function() {
                 })
             });
         }else{
-
+            UIkit.modal.alert('您没有选中要通知收件人的订单');
         }
     });
 
