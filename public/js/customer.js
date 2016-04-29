@@ -46,15 +46,16 @@ $(function(){
     });
 
 
-    //添加用户
+    //添加订单
     $('#add_order').on('click', '.uk-button-primary',function(event){
         var Cont = $('#add_order');
         var id = $('.uk-article').data('id');
         var code = Cont.find('input[name="code"]').val(),
-            company = Cont.find('select[name="company"]').val();
-
-        if(!code){
-            layer_alert(Cont,'快递号是需要填写的');
+            company = Cont.find('select[name="company"]').val(),
+            in_time = Cont.find('input[name="in_time"]').val();
+        var codePattern = /^[0-9a-zA-Z]{10,}$/;
+        if(!codePattern.test(code)){
+            layer_alert(Cont,'快递号格式不正确');
             Cont.find('input[name="code"]').addClass('uk-form-danger');
             return false;
         }else{
@@ -67,7 +68,8 @@ $(function(){
             data: {
                 id:id,
                 code:code,
-                company:company
+                company:company,
+                in_time:in_time
             },
             success:function(data){
                 if(data.status==0){

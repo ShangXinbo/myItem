@@ -7,7 +7,7 @@
 'use strict';
 
 const map = require('../configs/map.js');
-
+const FN = require('../classes/functions.js');
 const mongoose = require('mongoose');
 
 /*
@@ -19,8 +19,8 @@ const Schema = new mongoose.Schema({
     company: Number,
     pick_way: Number,
     status: Number,
-    in_time:Number,
-    out_time: Number,
+    in_time: Date,
+    out_time: Date,
     add_time: Date
 });
 
@@ -32,6 +32,10 @@ Schema.virtual('text_pick_way').get(function(){
 });
 Schema.virtual('text_status').get(function(){
     return map.order_status[this.status];
+});
+
+Schema.virtual('format_in_time').get(function(){
+    return FN.dateFormat(this.in_time);
 });
 
 

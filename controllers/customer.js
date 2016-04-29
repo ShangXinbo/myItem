@@ -115,20 +115,21 @@ exports.addOrder = function(req,res){
     let getId = req.query.id;
     let code = req.query.code;
     let company = req.query.company;
+    let in_time =  new Date(req.query.in_time).getTime();
     let now = new Date().getTime();
-
     var order = new Order({
         owner: getId,
         code : code,
         company: company,
         pick_way: 0,
         status: 0,
-        in_time: '',
+        in_time: in_time,
         out_time: '',
         add_time: now
     });
 
     order.save(function(err,result){
+        console.log(err);
         res.send(FN.resData(0, '添加成功'));
     });
 };

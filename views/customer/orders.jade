@@ -21,15 +21,19 @@ block content
                             th 状态
                     tbody
                         - for(var i=0;i<data.length;i++){
-                        tr   //TODO 如果是新订单新样式
+                        tr
                             td #{data[i].code}
+                                - if(data[i].status==0){
+                                    .uk-badge.uk-margin-left new
+                                - }
                             td #{data[i].text_company}
                             td #{data[i].text_pick_way}
-                            td #{data[i].in_time}
+                            td #{data[i].format_in_time}
                             td #{data[i].text_status}
                         - }
                 - }else{
                 | 没有数据
                 - }
     include layers
+    script(src='/js/datepicker.min.js')
     script(src='/js/customer.js')
