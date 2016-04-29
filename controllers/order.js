@@ -31,6 +31,8 @@ exports.orderList = function(req,res){
                 }
             }
         }
+    }else{
+        getOrders({});
     }
 
     function getOrders(param){

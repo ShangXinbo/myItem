@@ -33,7 +33,11 @@ app
             autoRemove: 'interval',
             autoRemoveInterval: 30  // In minutes. Default
         })
-    }));
+    }))
+    .use(function(req,res,next){
+        res.locals.url = req.url;
+        next();
+    });
 
 module.exports = app;
 require('./configs/routes')(app);
