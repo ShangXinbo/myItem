@@ -1,0 +1,21 @@
+unnotice.jadethead
+    tr
+        th 订单编号
+        th 快递公司
+        th 配送方式
+        th 到库时间
+        th 收件人
+        th 电话
+        th 操作
+tbody
+    - for(var i=0;i<orders.length;i++){
+    tr
+        td #{orders[i].code}
+        td #{orders[i].text_company}
+        td #{orders[i].text_pick_way}
+        td #{orders[i].format_in_time}
+        td #{orders[i].owner.name}
+        td #{orders[i].owner.tel}
+        td(data-id="#{orders[i]._id}")
+            a(target="_blank", href="/courier/orders/view?id=#{orders[i]._id}") 查看订单
+    - }

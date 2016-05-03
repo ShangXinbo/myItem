@@ -69,9 +69,8 @@ let post = function(msgid,msg){
 };
 
 
-exports.edit = function(req,res){
-    //TODO SMS edit model
-    res.send('asdf');
+exports.list = function(req,res){
+    res.send('sms.list');
 };
 
 exports.send = function(req,res){

@@ -67,3 +67,8 @@ exports.delOrder = function(req,res){
         console.log('');
     }
 };
+
+exports.edit = function(req,res){
+    //TODO 修改订单
+    res.render('order.edit');
+};

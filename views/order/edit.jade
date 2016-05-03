@@ -1,0 +1,36 @@
+extends ../common/layout
+
+block content
+    .uk-container.uk-container-center
+        include ../common/nav
+        article.uk-article
+            h2.uk-article-title #{data._id}
+            hr.uk-article-divider
+            .uk-width-1-3.uk-container-center
+                form.uk-form(action="",method="POST")
+                    .uk-form-row
+                        label.uk-form-label 姓名：
+                        .uk-form-controls
+                            input(type="hidden",name="id",value="#{data._id}")
+                            input.uk-form-width-large(name='name', type="text",value="#{data.name}")
+                    .uk-form-row
+                        label.uk-form-label 电话：
+                        .uk-form-controls
+                            input.uk-form-width-large(name='tel', maxlength="11",type="tel",value="#{data.tel}")
+                    .uk-form-row
+                        label.uk-form-label(for='town') 居住地:
+                        .uk-form-controls
+                            select.uk-form-width-large(name='town')
+                                option(value='1') 菜园村
+                                option(value='2') 杨各庄
+                    .uk-form-row
+                        label.uk-form-label(for='marks') 备注:
+                        .uk-form-controls
+                            textarea.uk-form-width-large(name='marks',value="#{data.marks}")
+                    .uk-form-row
+                        label.uk-form-label(for='last_time') 最后购买时间:
+                        .uk-form-controls
+                            input.uk-form-width-large(name="last_time" type="text",value="#{data.last_time}" disabled)
+                    .uk-form-row
+                        .uk-button.uk-width-1-1.uk-button-primary 修改
+    script(src='/js/customer.js')

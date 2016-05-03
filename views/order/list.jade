@@ -13,8 +13,16 @@ block content
                 a(href="/courier/orders?status=2") 已取单
         .uk-grid.uk-margin
             .uk-width-2-3
-                div.uk-button.uk-margin-right(disabled, id="sendmsg") 发送短信通知
-                div.uk-button(disabled, id="del_customer") 批量删除
+                if status == 0
+                    div.uk-button.uk-margin-right(disabled, id="sendmsg") 短信通知
+                    div.uk-button(disabled, id="del_customer") 删除
+                else if status == 1
+                    div.uk-button.uk-margin-right(disabled, id="sendmsg") 标记为已收取
+                    div.uk-button.uk-margin-right(disabled, id="del_customer") 标记为已配送
+                    div.uk-button(disabled, id="del_customer") 删除
+                else if status == 2
+                    div.uk-button.uk-margin-right(disabled, id="sendmsg") 自取筛选
+                    div.uk-button.uk-margin-right(disabled, id="sendmsg") 到库时间排序
             .uk-width-1-3
                 form.uk-form.uk-float-right(id="user_search",method="get")
                     .uk-form-row
@@ -23,36 +31,13 @@ block content
         .uk-overflow-container
             - if(orders.length>0){
             table.uk-table.uk-table-striped
-                thead
-                    tr
-                        th
-                            input(type="checkbox")
-                        th 订单编号
-                        th 快递公司
-                        th 配送方式
-                        th 到库时间
-                        th 收件人
-                        th 电话
-                        th 操作
-                tbody
-                    - for(var i=0;i<orders.length;i++){
-                    tr
-                        td
-                            input(type="checkbox",data-id="#{orders[i]._id}")
-                        td #{orders[i].code}
-                        td #{orders[i].text_company}
-                        td #{orders[i].text_pick_way}
-                        td #{orders[i].format_in_time}
-                        td #{orders[i].owner.name}
-                        td #{orders[i].owner.tel}
-                        td(data-id="#{orders[i]._id}")
-                            a(target="_blank", href="/courier/user/edit?id=#{orders[i]._id}") 修改
-                            span &nbsp;|&nbsp;
-                            a(target="_blank", href="/courier/user/orders?id=#{orders[i]._id}") 查看订单
-                    - }
-
+                if status == 0
+                    include unnotice
+                else if status == 1
+                    include noticed
+                else if status == 2
+                    include taked
             include ../common/pages
-
             - }else{
                | 没有数据
             - }

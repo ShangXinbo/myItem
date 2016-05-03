@@ -19,10 +19,11 @@ module.exports = function (app) {
         .get('/courier/user/orders*', account.isLogged, customer.userOrders)
         .get('/courier/user/orderadd*', account.isLogged, customer.addOrder)
         .get('/courier/user/del*', account.isLogged, customer.del)
-        .get('/courier/sms/edit*', account.isLogged, sms.edit)
-        .get('/courier/sms/send*', account.isLogged, sms.send)
         .get('/courier/orders', account.isLogged, order.orderList)
         .get('/courier/orders/del', account.isLogged, order.delOrder)
+        .get('/courier/orders/edit*', account.isLogged, order.edit)
+        .get('/courier/sms/list*', account.isLogged, sms.list)
+        .get('/courier/sms/send*', account.isLogged, sms.send)
         .get('/courier/account', account.isLogged, sms.edit)
         .all('/login*', account.login)
         .all('/logout', account.logout);

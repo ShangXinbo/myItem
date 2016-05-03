@@ -1,0 +1,25 @@
+thead
+    tr
+        th(width="5%")
+            input(type="checkbox")
+        th(width="20%") 订单编号
+        th(width="10%") 快递公司
+        th(width="10%") 配送方式
+        th(width="15%") 到库时间
+        th(width="15%") 收件人
+        th(width="20%") 电话
+        th(width="10%") 操作
+tbody
+    - for(var i=0;i<orders.length;i++){
+    tr
+        td
+            input(type="checkbox",data-id="#{orders[i]._id}")
+        td #{orders[i].code}
+        td #{orders[i].text_company}
+        td #{orders[i].text_pick_way}
+        td #{orders[i].format_in_time}
+        td #{orders[i].owner.name}
+        td #{orders[i].owner.tel}
+        td(data-id="#{orders[i]._id}")
+            a(href="/courier/orders/edit?id=#{orders[i]._id}") 修改
+    - }
