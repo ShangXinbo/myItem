@@ -14,7 +14,11 @@ const SmsSchema = new mongoose.Schema({
     tel : Number,
     code: String,
     status: Number,
-    mark : String
+    mark : String,
+    err_code: String,
+    err_msg : String,
+    fee: String,
+    sid : String
 });
 
 const Schema = new mongoose.Schema({

@@ -1,9 +1,73 @@
 
 'use strict';
 
+const https = require('https');
+const qs = require('querystring');
+
 const Customer = require('../models/Customer');
 const Order = require('../models/Order');
 const Sms = require('../models/Sms');
+const FN = require('../classes/functions');
+
+const apikey = '80b19200e90dcc958506a48fea5387eb1';
+const hostName = 'sms.yunpian.com';
+let send_sms_uri = '/v2/sms/tpl_single_send.json';
+let tpl_id = 1309895;
+
+
+let post = function(msgid,msg){
+    let options = {
+        hostname: hostName,
+        port: 443,
+        path: send_sms_uri,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+    };
+
+    let mobile = msg.tel;
+    let tpl_value = {
+        '#userName#': msg.username,
+        '#code#': msg.code,
+        '#admin#': 15903168574
+    };
+    let post_data = {
+        'apikey': apikey,
+        'mobile': mobile,
+        'tpl_id': tpl_id,
+        'tpl_value': qs.stringify(tpl_value)
+    };
+
+    let content = qs.stringify(post_data);
+
+    var req = https.request(options, function (res) {
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            chunk = JSON.parse(chunk);
+            if(chunk.code==0){
+                Sms.update({'log':{$elemMatch:{_id:msg._id}}}, {$set:{
+                    "log.$.status" : 1,
+                    "log.$.fee": chunk.fee,
+                    "log.$.sid": chunk.sid
+                }},function(err,data){
+                    console.log(data);
+                });
+            }else{
+                Sms.update({'log':{$elemMatch:{_id:msg._id}}}, {$set:{
+                    "log.$.status" : 2,
+                    "log.$.err_code": chunk.code,
+                    "log.$.err_msg": chunk.msg
+                }},function(err){
+                    if(err) console.log(err);
+                });
+            }
+        });
+    });
+    req.write(content);
+    req.end();
+};
+
 
 exports.edit = function(req,res){
     //TODO SMS edit model
@@ -20,7 +84,6 @@ exports.send = function(req,res){
         msg.name = new Date().getTime();
 
         for(var i=0;i<doc.length;i++){
-            //TODO 更新状态
             msg.log.push({
                 username: doc[i].owner.name,
                 tel: doc[i].owner.tel,
@@ -30,8 +93,10 @@ exports.send = function(req,res){
             });
         }
         msg.save(function(){
-            //TODO 发送短信
-            Sms.sendSingle(req,res,msg);
+            for(let val of msg.log){
+                post(msg._id,val);
+            }
+            res.send(FN.resData(0,'已加入短信发送池'));
         });
     });
 };
