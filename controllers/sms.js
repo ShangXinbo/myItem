@@ -70,7 +70,14 @@ let post = function(msgid,msg){
 
 
 exports.list = function(req,res){
-    res.send('sms.list');
+
+    Sms.find({}).exec(function(err,doc) {
+        console.log(doc);
+        res.render('sms/list',{
+            list: doc
+        });
+    });
+
 };
 
 exports.send = function(req,res){
@@ -90,6 +97,8 @@ exports.send = function(req,res){
                 status: 0,   //正在发送中
                 mark: ''
             });
+            doc[i].status = 1;
+            doc[i].save();
         }
         msg.save(function(){
             for(let val of msg.log){

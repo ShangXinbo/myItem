@@ -24,7 +24,7 @@ module.exports = function (app) {
         .get('/courier/orders/edit*', account.isLogged, order.edit)
         .get('/courier/sms/list*', account.isLogged, sms.list)
         .get('/courier/sms/send*', account.isLogged, sms.send)
-        .get('/courier/account', account.isLogged, sms.edit)
+        .get('/courier/account', account.isLogged, sms.send)
         .all('/login*', account.login)
         .all('/logout', account.logout);
 

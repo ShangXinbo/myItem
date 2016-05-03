@@ -1,3 +1,20 @@
 extends ../common/layout
+
 block content
-    //TODO
+    .uk-container.uk-container-center
+
+        include ../common/nav
+        .uk-overflow-container
+            
+            table.uk-table.uk-table-striped
+                caption #{list[0].name}
+                thead
+                    tr
+                        th(width="20%") 订单编号
+                        th(width="10%") 快递公司
+                        th(width="10%") 配送方式
+                        th(width="15%") 到库时间
+                        th(width="15%") 收件人
+                        th(width="20%") 电话
+                        th(width="10%") 操作
+                tbody
