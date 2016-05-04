@@ -72,7 +72,7 @@ let post = function(msgid,msg){
 
 exports.list = function(req,res){
 
-    Sms.find({}).exec(function(err,doc) {
+    Sms.find({}).sort({'name':-1}).exec(function(err,doc) {
         res.render('sms/list',{
             list: doc
         });

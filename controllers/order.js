@@ -76,9 +76,10 @@ exports.edit = function(req,res){
 
 
 exports.taged = function(req,res){
-    let method = req.query.method;
+    let method = req.query.tag;
     let arr = req.query.arr;
     method = method ? method: 0;
+    console.log(method);
     Order.update({_id:{$in:arr}},{status:2,pick_way:method},function(err,doc){
         res.send(FN.resData(0, '更改成功'));
     });
