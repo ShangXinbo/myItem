@@ -1,3 +1,4 @@
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: Base
  ========================================================================== */
@@ -2032,7 +2033,7 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
 .uk-navbar-nav > li:hover > a,
 .uk-navbar-nav > li > a:focus,
 .uk-navbar-nav > li.uk-open > a {
-  background-color: #E4F6FF;
+  background-color: #FFD873;
   color: #006494;
   /* 3 */
   outline: none;
@@ -2044,7 +2045,7 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
 }
 /* Active */
 .uk-navbar-nav > li.uk-active > a {
-  background-color: #E4F6FF;
+  background-color: #FFD873;
   color: #006494;
 }
 /* Sub-objects: `uk-navbar-nav-subtitle`
@@ -3496,7 +3497,7 @@ select.uk-form-width-mini {
  */
 .uk-button:hover,
 .uk-button:focus {
-  background-color: #D2D3D4;
+  background-color: #9DC4EA;
   color: #444;
   /* 2 */
   outline: none;
@@ -5848,8 +5849,8 @@ select.uk-form-width-mini {
   padding: 0 5px;
   background: #00a8e6;
   font-size: 10px;
-  font-weight: bold;
-  line-height: 14px;
+  font-weight: normal;
+  line-height: 12px;
   color: #fff;
   text-align: center;
   vertical-align: middle;
@@ -8741,4 +8742,17 @@ a.uk-thumbnail:focus {
 .uk-table td {
   vertical-align: top;
   border-bottom: solid 1px #cccccc;
+}
+.uk-badge {
+  display: inline-block;
+  padding: 0 5px;
+  background: #00a8e6;
+  font-size: 10px;
+  font-weight: normal;
+  line-height: 12px;
+  height: 14px;
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  text-transform: none;
 }

@@ -1,11 +1,15 @@
-h2.uk-margin-bottom.uk-margin-top 韵达快递
+h2.uk-margin-top
+    img(src="/images/logo_courier.png")
+    .uk-float-right.uk-margin.uk-h6
+        a.uk-margin-right shangxinbo
+        a 退出
 nav.uk-navbar.uk-margin
     ul.uk-navbar-nav.uk-hidden-small
-        li
-            a(href='') 订单管理
-        li.uk-active
-            a(href='') 用户管理
-        li
-            a(href='') 短信发送池
+        li(class=/\/courier\/user*/.test(locals.url) ? 'uk-active' : '')
+            a(href='/courier/user') 用户管理
+        li(class=/\/courier\/orders*/.test(locals.url)? 'uk-active':'')
+            a(href='/courier/orders') 订单管理
+        li(class=/\/courier\/sms*/.test(locals.url)? 'uk-active':'')
+            a(href='/courier/sms/list') 短信日志
         li
             a(href='') 个人主页

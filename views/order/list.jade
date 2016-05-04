@@ -1,0 +1,45 @@
+extends ../common/layout
+block content
+    .uk-container.uk-container-center
+
+        include ../common/nav
+
+        ul.uk-tab(data-uk-switch="{connect:'#my-id'}")
+            li(class=(status==0)?'uk-active':'')
+                a(href="/courier/orders?status=0") 未通知
+            li(class=(status==1)?'uk-active':'')
+                a(href="/courier/orders?status=1") 已通知
+            li(class=(status==2)?'uk-active':'')
+                a(href="/courier/orders?status=2") 已取单
+        .uk-grid.uk-margin
+            .uk-width-2-3
+                if status == 0
+                    div.uk-button.uk-margin-right(disabled, id="sendmsg") 短信通知
+                    div.uk-button(disabled, id="del_customer") 删除
+                else if status == 1
+                    div.uk-button.uk-margin-right(disabled, id="sendmsg") 标记为已收取
+                    div.uk-button.uk-margin-right(disabled, id="del_customer") 标记为已配送
+                    div.uk-button(disabled, id="del_customer") 删除
+                else if status == 2
+                    div.uk-button.uk-margin-right(disabled, id="sendmsg") 自取筛选
+                    div.uk-button.uk-margin-right(disabled, id="sendmsg") 到库时间排序
+            .uk-width-1-3
+                form.uk-form.uk-float-right(id="user_search",method="get")
+                    .uk-form-row
+                        input(type="text", name="keyword", placeholder="支持快递单号，姓名,手机号的查询",value="#{keyword}")
+                        button.uk-button 搜索
+        .uk-overflow-container
+            - if(orders.length>0){
+            table.uk-table.uk-table-striped
+                if status == 0
+                    include unnotice
+                else if status == 1
+                    include noticed
+                else if status == 2
+                    include taked
+            include ../common/pages
+            - }else{
+               | 没有数据
+            - }
+
+    script(src='/js/order.js')

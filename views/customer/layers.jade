@@ -70,18 +70,20 @@
                 .uk-form-row
                     label.uk-form-label(for='code') 订单号:
                     .uk-form-controls
-                        input.uk-form-width-large(type='number', name='code', placeholder='')
-                        //TODO 快递号的正则表达
+                        input.uk-form-width-large(type='text', name='code', placeholder='')
                 .uk-form-row
                     label.uk-form-label(for='company') 快递公司:
                     .uk-form-controls
                         select.uk-form-width-large(name='company')
                             //TODO 配置文件转化
-                            option(value='1') 韵达
-                            option(value='2') 圆通
-                            option(value='3') 申通
-                            option(value='4') EMS
-                            //TODO 入库时间选择插件
+                            option(value='0') 韵达
+                            option(value='1') 圆通
+                            option(value='2') 申通
+                            option(value='3') EMS
+                .uk-form-row
+                    label.uk-form-label(for='in_time') 入库时间:
+                    .uk-form-controls
+                        input.uk-form-width-large(name="in_time",readonly="readonly",data-uk-datepicker="{format:'YYYY-MM-DD'}")
         .uk-modal-footer.uk-text-right
             button.uk-button(data-close) 取消
             button.uk-button.uk-button-primary 确定

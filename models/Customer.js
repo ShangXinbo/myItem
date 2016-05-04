@@ -7,19 +7,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-
-/*
-* children schema of Customer
-* */
-const OrderSchema = new mongoose.Schema({
-    code: Number,
-    company: Number,
-    pick_way: Number,
-    status: Number,
-    in_time:Number,
-    out_time: Number
-    //TODO 信息添加的时间,用于数据排序
-});
+const FN = require('../classes/functions.js');
 
 const CustomerSchema = new mongoose.Schema({
     name: String,
@@ -27,7 +15,6 @@ const CustomerSchema = new mongoose.Schema({
     town: Number,
     useful: Boolean,
     marks: String,
-    orders:[OrderSchema],   //sub-document
     join_time: Number,
     last_time: Number
 });
@@ -37,7 +24,7 @@ const CustomerSchema = new mongoose.Schema({
  * @param end Nunber
  * @param cb Function
  * */
-CustomerSchema.statics.getUserLists = function (param, start, count, cb) {
+CustomerSchema.statics.getLists = function (param, start, count, cb) {
     this.find(param, cb).skip(start).limit(count);
 };
 
@@ -46,44 +33,41 @@ CustomerSchema.statics.getUserLists = function (param, start, count, cb) {
  * @param end Nunber
  * @param cb Function
  * */
-CustomerSchema.statics.findUserById = function (id, cb) {
+CustomerSchema.statics.findById = function (id, cb) {
     this.findOne({_id:id}, cb);
 };
+
+
+CustomerSchema.statics.findByName = function (name, cb) {
+    this.findOne({name:{$regex:eval('/'+ name+ '/i')}}, cb);
+};
+
+CustomerSchema.statics.findByTel = function (tel, cb) {
+    this.findOne({tel:tel}, cb);
+};
+
+CustomerSchema.virtual('format_last_time').get(function(){
+    return FN.dateFormat(this.last_time);
+});
 
 
 /*
 * @param id ObjectId
 * */
-CustomerSchema.statics.delUsersByIdArr = function(arr,cb){
+CustomerSchema.statics.delByIdArr = function(arr,cb){
     this.remove({_id:{$in:arr}},cb);
 };
 
 /*
 * add customer
 * */
-CustomerSchema.statics.addUser = function(obj,cb){
+CustomerSchema.statics.add = function(obj,cb){
     this.create(obj,cb);
 };
-
-
-/*
- * getAllUserOrders
- * */
-CustomerSchema.statics.getAllOrders = function(id,obj,cb){
-    this.create(obj,cb);
-};
-
-/*
- * delete Order
- * */
-CustomerSchema.statics.delOrder = function(id,obj,cb){
-    this.create(obj,cb);
-};
-
 
 /*
  * Collection Name customers
  * */
-const Customer = mongoose.model('customer', CustomerSchema);
+const Customer = mongoose.model('Customer', CustomerSchema);
 
 module.exports = Customer;

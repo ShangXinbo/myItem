@@ -3,7 +3,8 @@
 'use strict';
 
 const Customer = require('../models/Customer');
-const map = require('../configs/map.js');
+const Order = require('../models/Order');
+
 const FN = require('../classes/functions');
 
 exports.list = function (req, res) {
@@ -23,7 +24,7 @@ exports.list = function (req, res) {
         }
     }
 
-    Customer.getUserLists(param, page * pageNum, pageNum, function (err, doc) {
+    Customer.getLists(param, page * pageNum, pageNum, function (err, doc) {
         Customer.count(param,function(err,count){
             res.render('customer/list', {
                 title: '客户管理',
@@ -46,7 +47,7 @@ exports.add = function (req, res) {
     let town = req.query.town;
 
     if(name && FN.isRealPhone(tel)){
-        Customer.addUser({
+        Customer.add({
             name: name,
             tel: tel,
             town: town ? town : 1,   // default '菜园村'
@@ -68,7 +69,7 @@ exports.add = function (req, res) {
 exports.del = function (req, res) {
     let arr = req.query.arr;
     if(arr.length){
-        Customer.delUsersByIdArr(arr,function(err,data){
+        Customer.delByIdArr(arr,function(err,data){
             if(data){
                 res.send(FN.resData(0, '删除成功'));
             }else{
@@ -85,14 +86,21 @@ exports.edit = function(req,res){
     let getId = req.query.id;
     let postId = req.body.id;
     if(getId){
-        Customer.findUserById(getId,function(err,doc){
+        Customer.findById(getId,function(err,doc){
             res.render('customer/edit',{data:doc});
         });
     }else{
         if(postId){
-
+            Customer.findByIdAndUpdate(postId,{
+                name: req.body.name,
+                tel : req.body.tel,
+                town: req.body.town,
+                marks: req.body.marks
+            },{},function(err,doc){
+                res.send(FN.resData(0, '修改成功'));
+            });
         }else{
-            
+            console.log('edit_error');
         }
     }
 };
@@ -100,34 +108,36 @@ exports.edit = function(req,res){
 exports.userOrders = function(req,res){
     let getId = req.query.id;
     if(getId){
-        Customer.findUserById(getId,function(err,doc){
-            res.render('customer/orders',{data:doc});
+        Order.findByUserId(getId,function(err,orders){
+            Customer.findById(getId,function(err,user){
+                res.render('customer/orders',{data:orders,user:user});
+            });
         });
     }else{
         console.log('');
     }
 };
 
-
 exports.addOrder = function(req,res){
     let getId = req.query.id;
     let code = req.query.code;
     let company = req.query.company;
+    let in_time =  new Date(req.query.in_time).getTime();
     let now = new Date().getTime();
+    var order = new Order({
+        owner: getId,
+        code : code,
+        company: company,
+        pick_way: 0,
+        status: 0,
+        in_time: in_time,
+        out_time: '',
+        add_time: now
+    });
 
-    //TODO 入库时间转化
-
-    Customer.findUserById(getId,function(err,doc){
-        doc.orders.push({
-            code: code,
-            company: map.company[company],
-            pick_way: map.pick_way[0],
-            status: map.order_status[0],
-            in_time : now
-        });
-        doc.save(function(){
-            res.send(FN.resData(0, '添加成功'));
-        });
+    order.save(function(err,result){
+        console.log(err);
+        res.send(FN.resData(0, '添加成功'));
     });
 };
 

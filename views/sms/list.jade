@@ -1,0 +1,34 @@
+extends ../common/layout
+
+block content
+    .uk-container.uk-container-center
+
+        include ../common/nav
+        .uk-overflow-container
+            each log,index in list
+                table.uk-table.uk-table-striped
+                    caption #{log.format_name}
+                    thead
+                        tr
+                            th(width="15%") 订单编号
+                            th(width="10%") 用户名
+                            th(width="10%") 手机号
+                            th(width="10%") 费用
+                            th(width="10%") 状态
+                            th(width="10%") 失败状态码
+                            th(width="20%") 失败原因
+                            th(width="10%") 日志id
+                            th(width="10%") 操作
+                    tbody
+                        each loglist in log.log
+                            tr
+                                td #{loglist.code}
+                                td #{loglist.username}
+                                td #{loglist.tel}
+                                td #{loglist.fee}
+                                td #{loglist.text_status}
+                                td #{loglist.err_code}
+                                td #{loglist.err_msg}
+                                td #{loglist.sid}
+                                td
+                                    a 补发

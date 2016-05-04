@@ -46,15 +46,16 @@ $(function(){
     });
 
 
-    //添加用户
+    //添加订单
     $('#add_order').on('click', '.uk-button-primary',function(event){
         var Cont = $('#add_order');
         var id = $('.uk-article').data('id');
         var code = Cont.find('input[name="code"]').val(),
-            company = Cont.find('select[name="company"]').val();
-
-        if(!code){
-            layer_alert(Cont,'快递号是需要填写的');
+            company = Cont.find('select[name="company"]').val(),
+            in_time = Cont.find('input[name="in_time"]').val();
+        var codePattern = /^[0-9a-zA-Z]{10,}$/;
+        if(!codePattern.test(code)){
+            layer_alert(Cont,'快递号格式不正确');
             Cont.find('input[name="code"]').addClass('uk-form-danger');
             return false;
         }else{
@@ -67,7 +68,8 @@ $(function(){
             data: {
                 id:id,
                 code:code,
-                company:company
+                company:company,
+                in_time:in_time
             },
             success:function(data){
                 if(data.status==0){
@@ -149,6 +151,51 @@ $(function(){
         }
     });
 
+    $('#user_edit').on('click',function(event){
+        var Cont = $('form');
+        var id = $('input[name="id"]').val();
+        var name = $('input[name="name"]').val(),
+            tel = $('input[name="tel"]').val(),
+            town = $('select[name="town"]').val(),
+            marks = $('textarea[name="marks"]').val();
+
+        if(!name){
+            body_alert(Cont,'姓名是需要填写的');
+            Cont.find('input[name="name"]').addClass('uk-form-danger');
+            return false;
+        }else{
+            Cont.find('input[name="name"]').removeClass('uk-form-danger');
+        }
+        if(!isRealPhone(tel)){
+            body_alert(Cont,'手机号码不合法');
+            Cont.find('input[name="tel"]').addClass('uk-form-danger');
+            return false;
+        }else{
+            Cont.find('input[name="tel"]').removeClass('uk-form-danger');
+        }
+
+        $.ajax({
+            url: '/courier/user/edit',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id:id,
+                name:name,
+                tel:tel,
+                town:town,
+                marks:marks
+            },
+            success:function(data){
+                if(data.status==0){
+                    window.location.href = '/courier/user';
+                }
+            },
+            error:function(err){
+                console.log(err);
+            }
+        })
+    });
+
 
 
 });
@@ -157,6 +204,11 @@ function layer_alert(cont,msg){
     var dom = '<div class="uk-alert uk-alert-danger">'+ msg + '</div>';
     $(cont).find('.uk-modal-header').next('.uk-alert').remove();
     $(cont).find('.uk-modal-header').after(dom);
+}
+function body_alert(cont,msg){
+    var dom = '<div class="uk-alert uk-alert-danger">'+ msg + '</div>';
+    $('#user_edit').prev('.uk-alert').remove();
+    $('#user_edit').before(dom);
 }
 function isRealPhone(num){
     var patten1 = /^1(3[456789]{1}|47|5[012789]{1}|78|8[23478]{1})\d{8}$/;   //移动
