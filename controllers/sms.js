@@ -45,6 +45,7 @@ let post = function(msgid,msg){
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
             chunk = JSON.parse(chunk);
+            console.log(chunk);
             if(chunk.code==0){
                 Sms.update({'log':{$elemMatch:{_id:msg._id}}}, {$set:{
                     "log.$.status" : 1,
@@ -72,7 +73,6 @@ let post = function(msgid,msg){
 exports.list = function(req,res){
 
     Sms.find({}).exec(function(err,doc) {
-        console.log(doc);
         res.render('sms/list',{
             list: doc
         });

@@ -8,6 +8,8 @@
 
 const Customer = require('../models/Customer');
 const mongoose = require('mongoose');
+const map = require('../configs/map.js');
+const FN = require('../classes/functions.js');
 
 const SmsSchema = new mongoose.Schema({
     username: String,
@@ -21,9 +23,17 @@ const SmsSchema = new mongoose.Schema({
     sid : String
 });
 
+SmsSchema.virtual('text_status').get(function(){
+    return map.sms_status[this.status];
+});
+
 const Schema = new mongoose.Schema({
     name : Date,
     log : [SmsSchema]
+});
+
+Schema.virtual('format_name').get(function(){
+    return FN.dateFormat(this.name);
 });
 
 
