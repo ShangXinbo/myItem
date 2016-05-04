@@ -91,9 +91,16 @@ exports.edit = function(req,res){
         });
     }else{
         if(postId){
-
+            Customer.findByIdAndUpdate(postId,{
+                name: req.body.name,
+                tel : req.body.tel,
+                town: req.body.town,
+                marks: req.body.marks
+            },{},function(err,doc){
+                res.send(FN.resData(0, '修改成功'));
+            });
         }else{
-            
+            console.log('edit_error');
         }
     }
 };

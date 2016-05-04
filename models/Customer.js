@@ -7,6 +7,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const FN = require('../classes/functions.js');
 
 const CustomerSchema = new mongoose.Schema({
     name: String,
@@ -44,6 +45,10 @@ CustomerSchema.statics.findByName = function (name, cb) {
 CustomerSchema.statics.findByTel = function (tel, cb) {
     this.findOne({tel:tel}, cb);
 };
+
+CustomerSchema.virtual('format_last_time').get(function(){
+    return FN.dateFormat(this.last_time);
+});
 
 
 /*

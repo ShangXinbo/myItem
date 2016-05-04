@@ -2033,7 +2033,7 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
 .uk-navbar-nav > li:hover > a,
 .uk-navbar-nav > li > a:focus,
 .uk-navbar-nav > li.uk-open > a {
-  background-color: #E4F6FF;
+  background-color: #FFD873;
   color: #006494;
   /* 3 */
   outline: none;
@@ -2045,7 +2045,7 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
 }
 /* Active */
 .uk-navbar-nav > li.uk-active > a {
-  background-color: #E4F6FF;
+  background-color: #FFD873;
   color: #006494;
 }
 /* Sub-objects: `uk-navbar-nav-subtitle`
