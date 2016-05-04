@@ -47,8 +47,12 @@ Schema.statics.findByUserId = function (id, cb) {
     this.find({owner:id}, cb).sort({'in_time':-1});
 };
 
-Schema.static.del = function(id,cb){
+Schema.statics.del = function(id,cb){
     this.remove({_id:id},cb);
+};
+
+Schema.statics.delByIdArr = function(arr,cb){
+    this.remove({_id:{$in:arr}},cb);
 };
 
 const Order = mongoose.model('Order', Schema);

@@ -15,11 +15,11 @@ block content
             .uk-width-2-3
                 if status == 0
                     div.uk-button.uk-margin-right(disabled, id="sendmsg") 短信通知
-                    div.uk-button(disabled, id="del_customer") 删除
+                    div.uk-button(disabled, id="del_order") 删除
                 else if status == 1
                     div.uk-button.uk-margin-right(disabled, id="sendmsg") 标记为已收取
                     div.uk-button.uk-margin-right(disabled, id="del_customer") 标记为已配送
-                    div.uk-button(disabled, id="del_customer") 删除
+                    div.uk-button(disabled, id="del_order") 删除
                 else if status == 2
                     div.uk-button.uk-margin-right(disabled, id="sendmsg") 自取筛选
                     div.uk-button.uk-margin-right(disabled, id="sendmsg") 到库时间排序

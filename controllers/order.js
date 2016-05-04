@@ -55,16 +55,17 @@ exports.orderList = function(req,res){
 };
 
 exports.delOrder = function(req,res){
-    //TODO 删除订单
-    let id = req.query.id ;
-    if(id){
-        Order.del(id,function(err,doc){
-            if(doc){
-                res.send(FN.resData(0, '删除成功', data));
+    let arr = req.query.arr;
+    if(arr.length){
+        Order.delByIdArr(arr,function(err,data){
+            if(data){
+                res.send(FN.resData(0, '删除成功'));
+            }else{
+                res.send(FN.resData(1, err.toString()));
             }
         });
-    }else{
-        console.log('');
+    }else {
+        res.send(FN.resData(2, '没有指定可删除的数据id'));
     }
 };
 

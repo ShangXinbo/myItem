@@ -67,6 +67,8 @@ exports.add = function (req, res) {
 };
 
 exports.del = function (req, res) {
+
+    //TODO 删除用户时检查是否有订单
     let arr = req.query.arr;
     if(arr.length){
         Customer.delByIdArr(arr,function(err,data){

@@ -1,5 +1,5 @@
 $(function() {
-    //批量删除用户
+
     $('table').on('click','th input[type="checkbox"]',function(event){
         var checked = $(this)[0].checked;
         var tdcheck = $('table td input[type="checkbox"]');
@@ -55,9 +55,9 @@ $(function() {
         }
     });
 
-    $('#del_customer').on('click',function(event){
+    //删除功能
+    $('#del_order').on('click',function(event){
 
-        //TODO 完成删除功能
         UIkit.modal.confirm("您的操作不可返回，请确认是否删除选中数据", function(){
             var checked = $('table td input[type="checkbox"]');
             var arr = [];
@@ -68,7 +68,7 @@ $(function() {
             }
             if(arr.length>0){
                 $.ajax({
-                    url: '/courier/order/del',
+                    url: '/courier/orders/del',
                     type: 'GET',
                     dataType : 'json',
                     data:{
@@ -85,8 +85,6 @@ $(function() {
                         console.log(err);
                     }
                 })
-            }else{
-
             }
 
         });
