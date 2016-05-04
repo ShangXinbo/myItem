@@ -7,6 +7,7 @@ const customer = require('../controllers/customer');
 const sms = require('../controllers/sms');
 const index = require('../controllers/index');
 const account = require('../controllers/account');
+const setting = require('../controllers/setting');
 
 module.exports = function (app) {
     app
@@ -24,7 +25,7 @@ module.exports = function (app) {
         .get('/courier/orders/tag*', account.isLogged, order.taged)
         .get('/courier/sms/list*', account.isLogged, sms.list)
         .get('/courier/sms/send*', account.isLogged, sms.send)
-        .get('/courier/account', account.isLogged, sms.send)
+        .get('/courier/setting', account.isLogged, setting.index)
         .all('/login*', account.login)
         .all('/logout', account.logout);
 

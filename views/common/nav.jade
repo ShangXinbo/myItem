@@ -11,5 +11,5 @@ nav.uk-navbar.uk-margin
             a(href='/courier/orders') 快递管理
         li(class=/\/courier\/sms*/.test(locals.url)? 'uk-active':'')
             a(href='/courier/sms/list') 短信日志
-        li
-            a(href='') 个人主页
+        li(class=/\/courier\/setting*/.test(locals.url)? 'uk-active':'')
+            a(href='/courier/setting') 系统设置
