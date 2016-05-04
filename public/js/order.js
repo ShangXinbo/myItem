@@ -89,4 +89,37 @@ $(function() {
 
         });
     });
+
+    $('div[data-do]').on('click',function(event){
+        var checked = $('table td input[type="checkbox"]');
+        var arr = [];
+        for(var i=0;i<checked.length;i++){
+            if(checked[i].checked){
+                arr.push($(checked[i]).data('id'));
+            }
+        }
+        var method = $(this).data('do')=='to'? 1:0;
+        if(arr.length>0){
+            $.ajax({
+                url: '/courier/orders/tag',
+                type: 'GET',
+                dataType: 'json',
+                data:{
+                    tag: method,
+                    arr: arr
+                },
+                success:function(data){
+                    if(data.status==0){
+                        window.location.reload();
+                    }else{
+                        console.log(err);
+                    }
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            })
+        }
+
+    });
 });

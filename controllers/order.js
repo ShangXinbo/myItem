@@ -70,6 +70,17 @@ exports.delOrder = function(req,res){
 };
 
 exports.edit = function(req,res){
-    //TODO 修改订单
+    //TODO 修改权限再考虑一下
     res.render('order.edit');
+};
+
+
+exports.taged = function(req,res){
+    let method = req.query.method;
+    let arr = req.query.arr;
+    method = method ? method: 0;
+    Order.update({_id:{$in:arr}},{status:2,pick_way:method},function(err,doc){
+        res.send(FN.resData(0, '更改成功'));
+    });
+
 };
