@@ -37,7 +37,7 @@ exports.orderList = function(req,res){
 
     function getOrders(param){
 
-        Order.find(param).skip(page * pageNum).limit(pageNum).populate('owner').exec(function(err,doc){
+        Order.find(param).skip(page * pageNum).limit(pageNum).sort({'in_time':-1}).populate('owner').exec(function(err,doc){
             Order.count(param,function(err,count){
                 res.render('order/list', {
                     title: '订单管理',
