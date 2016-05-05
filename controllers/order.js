@@ -37,7 +37,7 @@ exports.orderList = function(req,res){
 
     function getOrders(param){
 
-        Order.find(param).skip(page * pageNum).limit(pageNum).populate('owner').exec(function(err,doc){
+        Order.find(param).skip(page * pageNum).limit(pageNum).sort({'in_time':-1}).populate('owner').exec(function(err,doc){
             Order.count(param,function(err,count){
                 res.render('order/list', {
                     title: '订单管理',
@@ -55,20 +55,33 @@ exports.orderList = function(req,res){
 };
 
 exports.delOrder = function(req,res){
-    //TODO 删除订单
-    let id = req.query.id ;
-    if(id){
-        Order.del(id,function(err,doc){
-            if(doc){
-                res.send(FN.resData(0, '删除成功', data));
+    let arr = req.query.arr;
+    if(arr.length){
+        Order.delByIdArr(arr,function(err,data){
+            if(data){
+                res.send(FN.resData(0, '删除成功'));
+            }else{
+                res.send(FN.resData(1, err.toString()));
             }
         });
-    }else{
-        console.log('');
+    }else {
+        res.send(FN.resData(2, '没有指定可删除的数据id'));
     }
 };
 
 exports.edit = function(req,res){
-    //TODO 修改订单
+    //TODO 修改权限再考虑一下
     res.render('order.edit');
+};
+
+
+exports.taged = function(req,res){
+    let method = req.query.tag;
+    let arr = req.query.arr;
+    method = method ? method: 0;
+    console.log(method);
+    Order.update({_id:{$in:arr}},{status:2,pick_way:method},function(err,doc){
+        res.send(FN.resData(0, '更改成功'));
+    });
+
 };

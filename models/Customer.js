@@ -25,7 +25,7 @@ const CustomerSchema = new mongoose.Schema({
  * @param cb Function
  * */
 CustomerSchema.statics.getLists = function (param, start, count, cb) {
-    this.find(param, cb).skip(start).limit(count);
+    this.find(param, cb).sort({'last_time':-1}).skip(start).limit(count);
 };
 
 /*
@@ -46,9 +46,13 @@ CustomerSchema.statics.findByTel = function (tel, cb) {
     this.findOne({tel:tel}, cb);
 };
 
+CustomerSchema.virtual('format_join_time').get(function(){
+    return FN.dateFormat(this.join_time);
+});
 CustomerSchema.virtual('format_last_time').get(function(){
     return FN.dateFormat(this.last_time);
 });
+
 
 
 /*

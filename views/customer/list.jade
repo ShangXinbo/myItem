@@ -25,7 +25,7 @@ block content
                         th 手机号
                         th 村区
                         th 加入时间
-                        th 最近取单时间
+                        th 最近取件时间
                         th 操作
                 tbody
                     - for(var i=0;i<customers.length;i++){
@@ -40,14 +40,14 @@ block content
                                     | 菜园村
                                 else if(customers[i].town==2)
                                     | 杨各庄
-                            td #{FN.dateFormat(customers[i].join_time)}
-                            td #{FN.dateFormat(customers[i].last_time)}
+                            td #{customers[i].format_last_time}
+                            td #{customers[i].format_last_time}
                             td(data-id="#{customers[i]._id}")
                                 a(href="/courier/user/edit?id=#{customers[i]._id}") 修改
                                 span &nbsp;|&nbsp;
                                 a(target="_blank", href="/courier/user/orders?id=#{customers[i]._id}") 查看订单
                     - }
-
+            - var baseUrl = '/courier/user?page='
             include ../common/pages
 
             - }else{

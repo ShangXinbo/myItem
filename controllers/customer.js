@@ -4,7 +4,7 @@
 
 const Customer = require('../models/Customer');
 const Order = require('../models/Order');
-
+const Map = require('../configs/map');
 const FN = require('../classes/functions');
 
 exports.list = function (req, res) {
@@ -30,11 +30,11 @@ exports.list = function (req, res) {
                 title: '客户管理',
                 keyword: keyword,
                 customers: doc,
+                towns: Map.town,
                 pages: {
                     current: parseInt(page) + 1,
                     total : Math.ceil(count/pageNum)
-                },
-                FN : FN
+                }
             });
         });
     });
@@ -67,6 +67,8 @@ exports.add = function (req, res) {
 };
 
 exports.del = function (req, res) {
+
+    //TODO 删除用户时检查是否有订单
     let arr = req.query.arr;
     if(arr.length){
         Customer.delByIdArr(arr,function(err,data){
@@ -87,7 +89,7 @@ exports.edit = function(req,res){
     let postId = req.body.id;
     if(getId){
         Customer.findById(getId,function(err,doc){
-            res.render('customer/edit',{data:doc});
+            res.render('customer/edit',{data:doc,towns: Map.town});
         });
     }else{
         if(postId){
@@ -110,7 +112,7 @@ exports.userOrders = function(req,res){
     if(getId){
         Order.findByUserId(getId,function(err,orders){
             Customer.findById(getId,function(err,user){
-                res.render('customer/orders',{data:orders,user:user});
+                res.render('customer/orders',{data:orders,user:user,curier_company:Map.curier_company});
             });
         });
     }else{

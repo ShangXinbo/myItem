@@ -36,22 +36,24 @@ Schema.virtual('text_status').get(function(){
 });
 
 Schema.virtual('format_in_time').get(function(){
-    return FN.dateFormat(this.in_time);
+    return FN.dateFormat(this.in_time).substr(0,10);
 });
 
 Schema.statics.getLists = function (param, start, count, cb) {
-    this.find(param, cb).skip(start).limit(count);
+    this.find(param, cb).sort({'in_time':-1}).skip(start).limit(count);
 };
 
 Schema.statics.findByUserId = function (id, cb) {
-    this.find({owner:id}, cb);
+    this.find({owner:id}, cb).sort({'in_time':-1});
 };
 
-
-Schema.static.del = function(id,cb){
+Schema.statics.del = function(id,cb){
     this.remove({_id:id},cb);
 };
 
+Schema.statics.delByIdArr = function(arr,cb){
+    this.remove({_id:{$in:arr}},cb);
+};
 
 const Order = mongoose.model('Order', Schema);
 module.exports = Order;

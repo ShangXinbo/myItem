@@ -6,7 +6,7 @@ block content
         include ../common/nav
         article.uk-article(data-id="#{user._id}")
             .uk-clearfix
-                h2.uk-float-left #{user.name}
+                h2.uk-float-left #{user.name}的快递
                 .uk-button.uk-float-right(data-uk-modal="{target:'#add_order'}") 添加新订单
             hr.uk-article-divider.uk-margin
             .uk-overflow-container
@@ -14,7 +14,7 @@ block content
                 table.uk-table.uk-table-striped
                     thead
                         tr
-                            th 订单编号
+                            th 快递编号
                             th 快递公司
                             th 配送方式
                             th 到库时间
