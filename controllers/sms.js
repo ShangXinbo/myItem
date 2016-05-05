@@ -6,6 +6,7 @@ const qs = require('querystring');
 const Customer = require('../models/Customer');
 const Order = require('../models/Order');
 const Sms = require('../models/Sms');
+const Setting = require('../models/Setting');
 const FN = require('../classes/functions');
 
 const apikey = '80b19200e90dcc958506a48fea5387eb1';
@@ -29,7 +30,7 @@ let post = function (msgid, msg) {
     let tpl_value = {
         '#userName#': msg.username,
         '#code#': msg.code,
-        '#admin#': 15903168574
+        '#admin#': Setting.admin_tel
     };
     let post_data = {
         'apikey': apikey,

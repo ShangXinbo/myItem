@@ -26,6 +26,7 @@ module.exports = function (app) {
         .get('/courier/sms/list*', account.isLogged, sms.list)
         .get('/courier/sms/send*', account.isLogged, sms.send)
         .get('/courier/setting', account.isLogged, setting.index)
+        .get('/courier/setting/edit', account.isLogged, setting.edit)
         .all('/login*', account.login)
         .all('/logout', account.logout);
 

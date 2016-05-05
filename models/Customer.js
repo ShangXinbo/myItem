@@ -46,9 +46,13 @@ CustomerSchema.statics.findByTel = function (tel, cb) {
     this.findOne({tel:tel}, cb);
 };
 
+CustomerSchema.virtual('format_join_time').get(function(){
+    return FN.dateFormat(this.join_time);
+});
 CustomerSchema.virtual('format_last_time').get(function(){
     return FN.dateFormat(this.last_time);
 });
+
 
 
 /*

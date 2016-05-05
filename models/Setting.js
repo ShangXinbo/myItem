@@ -10,8 +10,7 @@ const mongoose = require('mongoose');
 
 const Schema = new mongoose.Schema({
     admin_tel: Number
-
 });
 
-const Setting = mongoose.model('Setting', Schema);
+const Setting = mongoose.model('setting', Schema);
 module.exports = Setting;

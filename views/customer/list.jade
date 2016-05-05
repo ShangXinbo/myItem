@@ -40,8 +40,8 @@ block content
                                     | 菜园村
                                 else if(customers[i].town==2)
                                     | 杨各庄
-                            td #{FN.dateFormat(customers[i].join_time)}
-                            td #{FN.dateFormat(customers[i].last_time)}
+                            td #{customers[i].format_last_time}
+                            td #{customers[i].format_last_time}
                             td(data-id="#{customers[i]._id}")
                                 a(href="/courier/user/edit?id=#{customers[i]._id}") 修改
                                 span &nbsp;|&nbsp;
