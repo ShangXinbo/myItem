@@ -31,7 +31,7 @@ app
         store: new mongoStore({
             url: DB,
             autoRemove: 'interval',
-            autoRemoveInterval: 30  // In minutes. Default
+            autoRemoveInterval: 10  // In minutes. Default
         })
     }))
     .use(function(req,res,next){
