@@ -2919,12 +2919,12 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
  */
 .uk-table caption,
 .uk-table tfoot {
-  font-size: 12px;
+  font-size: 14px;
   font-style: italic;
 }
 .uk-table caption {
   text-align: left;
-  color: #999;
+  color: #009AE4;
 }
 /*
  * Active State
