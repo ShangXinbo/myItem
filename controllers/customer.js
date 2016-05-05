@@ -34,8 +34,7 @@ exports.list = function (req, res) {
                 pages: {
                     current: parseInt(page) + 1,
                     total : Math.ceil(count/pageNum)
-                },
-                FN : FN
+                }
             });
         });
     });
