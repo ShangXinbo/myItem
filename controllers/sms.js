@@ -8,17 +8,16 @@ const Order = require('../models/Order');
 const Sms = require('../models/Sms');
 const Setting = require('../models/Setting');
 const FN = require('../classes/functions');
+const config = require('../configs/config');
 
-const apikey = '80b19200e90dcc958506a48fea5387eb1';
-const hostName = 'sms.yunpian.com';
 let send_sms_uri = '/v2/sms/tpl_single_send.json';
 let tpl_id = 1309895;
 
 
 let post = function (msgid, msg) {
     let options = {
-        hostname: hostName,
-        port: 443,
+        hostname: config.sms_host,
+        port: config.sms.port,
         path: send_sms_uri,
         method: 'POST',
         headers: {
@@ -33,7 +32,7 @@ let post = function (msgid, msg) {
         '#admin#': Setting.admin_tel
     };
     let post_data = {
-        'apikey': apikey,
+        'apikey': config.sms_apikey,
         'mobile': mobile,
         'tpl_id': tpl_id,
         'tpl_value': qs.stringify(tpl_value)
