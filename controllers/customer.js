@@ -45,6 +45,7 @@ exports.add = function (req, res) {
     let tel = req.query.tel;
     let time = new Date().getTime();
     let town = req.query.town;
+    let marks = req.query.marks;
 
     if(name && FN.isRealPhone(tel)){
         Customer.add({
@@ -52,6 +53,7 @@ exports.add = function (req, res) {
             tel: tel,
             town: town ? town : 1,   // default '菜园村'
             useful: 1,
+            marks: marks,
             join_time: time,
             last_time: time
         },function(err,data){
