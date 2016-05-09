@@ -35,11 +35,7 @@ block content
                             td #{customers[i]._id}
                             td #{customers[i].name}
                             td #{customers[i].tel}
-                            td
-                                if(customers[i].town==1)
-                                    | 菜园村
-                                else if(customers[i].town==2)
-                                    | 杨各庄
+                            td #{customers[i].text_town}
                             td #{customers[i].format_last_time}
                             td #{customers[i].format_last_time}
                             td(data-id="#{customers[i]._id}")
