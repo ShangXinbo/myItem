@@ -17,7 +17,7 @@ let tpl_id = 1309895;
 let post = function (msgid, msg) {
     let options = {
         hostname: config.sms_host,
-        port: config.sms.port,
+        port: config.sms_port,
         path: send_sms_uri,
         method: 'POST',
         headers: {
@@ -113,7 +113,8 @@ exports.send = function (req, res) {
             doc[i].save();
         }
         msg.save(function () {
-            for (let val of msg.log) {
+            for (var val of msg.log) {
+                console.log(val);
                 post(msg._id, val);
             }
             res.send(FN.resData(0, '已加入短信发送池'));
