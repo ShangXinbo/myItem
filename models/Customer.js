@@ -8,6 +8,7 @@
 
 const mongoose = require('mongoose');
 const FN = require('../classes/functions.js');
+const map = require('../configs/map.js');
 
 const CustomerSchema = new mongoose.Schema({
     name: String,
@@ -17,6 +18,10 @@ const CustomerSchema = new mongoose.Schema({
     marks: String,
     join_time: Number,
     last_time: Number
+});
+
+CustomerSchema.virtual('text_town').get(function(){
+    return map.town[this.town];
 });
 
 /*
