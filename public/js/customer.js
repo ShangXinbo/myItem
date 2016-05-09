@@ -61,6 +61,13 @@ $(function(){
         }else{
             Cont.find('input[name="code"]').removeClass('uk-form-danger');
         }
+        if(!in_time){
+            layer_alert(Cont,'入库时间需要选择');
+            Cont.find('input[name="in_time"]').addClass('uk-form-danger');
+            return false;
+        }else{
+            Cont.find('input[name="in_time"]').removeClass('uk-form-danger');
+        }
         $.ajax({
             url: '/courier/user/orderadd',
             type: 'GET',

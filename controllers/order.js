@@ -70,7 +70,7 @@ exports.delOrder = function(req,res){
 };
 
 exports.edit = function(req,res){
-    //TODO 修改权限再考虑一下
+    //TODO 修改权限再考虑
     res.render('order.edit');
 };
 
