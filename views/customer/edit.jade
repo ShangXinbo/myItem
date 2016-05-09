@@ -27,7 +27,10 @@ block content
                             if towns
                                 select.uk-form-width-large(name='town')
                                     each town,index in towns
-                                        option(value='#{index}' selected="data.town==index?true:false") #{town}
+                                        if data.town == index
+                                            option(value='#{index}' selected="true") #{town}
+                                        else
+                                            option(value='#{index}') #{town}
                     .uk-form-row
                         label.uk-form-label(for='marks') 备注:
                         .uk-form-controls
