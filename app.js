@@ -12,7 +12,7 @@ const mongoStore = require('connect-mongo')(session);
 const join = require('path').join;
 
 const app = express();
-const DB = 'mongodb://127.0.0.1:27017/yunda';  //mongodb server
+const DB = 'mongodb://shang:shang123@127.0.0.1:27017/yunda';  //mongodb server
 
 app
     .set('env','test')
