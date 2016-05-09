@@ -11,15 +11,16 @@ thead
         th(width="10%") 操作
 tbody
     - for(var i=0;i<orders.length;i++){
-    tr
-        td
-            input(type="checkbox",data-id="#{orders[i]._id}")
-        td #{orders[i].code}
-        td #{orders[i].text_company}
-        td #{orders[i].text_pick_way}
-        td #{orders[i].format_in_time}
-        td #{orders[i].owner.name}
-        td #{orders[i].owner.tel}
-        td(data-id="#{orders[i]._id}")
-            a() 修改
+        if orders[i].owner
+            tr
+                td
+                    input(type="checkbox",data-id="#{orders[i]._id}")
+                td #{orders[i].code}
+                td #{orders[i].text_company}
+                td #{orders[i].text_pick_way}
+                td #{orders[i].format_in_time}
+                td #{orders[i].owner.name}
+                td #{orders[i].owner.tel}
+                td(data-id="#{orders[i]._id}")
+                    a() 修改
     - }

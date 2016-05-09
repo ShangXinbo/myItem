@@ -14,8 +14,12 @@ tbody
         td #{orders[i].text_company}
         td #{orders[i].text_pick_way}
         td #{orders[i].format_in_time}
-        td #{orders[i].owner.name}
-        td #{orders[i].owner.tel}
+        if orders[i].owner
+            td #{orders[i].owner.name}
+            td #{orders[i].owner.tel}
+        else
+            td ——
+            td ——
         td(data-id="#{orders[i]._id}")
             a(target="_blank", href="/courier/orders/view?id=#{orders[i]._id}") 查看订单
     - }
