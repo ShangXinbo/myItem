@@ -8,6 +8,7 @@
 
 const mongoose = require('mongoose');
 const FN = require('../classes/functions.js');
+const map = require('../configs/map.js');
 
 const SchemaSmsAlone = new mongoose.Schema({
     sid : String,
@@ -18,10 +19,16 @@ const SchemaSmsAlone = new mongoose.Schema({
     fee: String
 });
 
+SchemaSmsAlone.virtual('text_status').get(function(){
+    return map.sms_status[this.status];
+});
+
 const Schema = new mongoose.Schema({
     name : Date,
     log : [SchemaSmsAlone]
 });
+
+
 
 Schema.virtual('format_name').get(function(){
     return FN.dateFormat(this.name);
