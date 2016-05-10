@@ -9,7 +9,9 @@ nav.uk-navbar.uk-margin
             a(href='/courier/user') 用户管理
         li(class=/\/courier\/orders*/.test(locals.url)? 'uk-active':'')
             a(href='/courier/orders') 快递管理
-        li(class=/\/courier\/sms*/.test(locals.url)? 'uk-active':'')
+        li(class=/\/courier\/sms\/list*/.test(locals.url)? 'uk-active':'')
             a(href='/courier/sms/list') 短信日志
         li(class=/\/courier\/setting*/.test(locals.url)? 'uk-active':'')
             a(href='/courier/setting') 系统设置
+        li(class=/\/courier\/sms\/alone*/.test(locals.url) ? 'uk-active' : '')
+            a(href='/courier/sms/alone') 独立短信

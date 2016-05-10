@@ -1,0 +1,51 @@
+extends ../common/layout
+
+block content
+    .uk-container.uk-container-center
+
+        include ../common/nav
+        .uk-overflow-container
+            .uk-grid
+                .uk-width-2-5
+                    form.uk-form
+                        .uk-form-row
+                            .uk-form-label 电话号码
+                            .uk-form-controls(id="tel_stack")
+                        .uk-form-row
+                            .uk-form-controls
+                                input.uk-form-width-large(name="add_tel" type="tel",value="", maxlength="11", placeholder="电话号码")
+                        .uk-form-row
+                            .uk-button.uk-width-1-1.uk-button-primary(id="add_tel") 添加电话号码
+                .uk-width-3-5
+                    form.uk-form
+                        .uk-form-row
+                            .uk-form-label 短信内容(短信内容中需要有“，”,否则不能正常发送)
+                            .uk-form-controls
+                                textarea.uk-width-1-1.uk-form-width-large(name="content")
+                        .uk-form-row
+                            .uk-button.uk-button-primary(id="send_msg") 发送
+            if list.length>0
+                hr.uk-article-divider
+                each log,index in list
+                    table.uk-table.uk-table-striped
+                        caption #{log.format_name}
+                        thead
+                            tr
+                                th(width="15%") 日志id
+                                th(width="15%") 手机号
+                                th(width="10%") 费用
+                                th(width="10%") 状态
+                                th(width="10%") 失败状态码
+                                th(width="30%") 失败原因
+                        tbody
+                            each loglist in log.log
+                                tr
+                                    td(width="15%") #{loglist.sid}
+                                    td(width="10%") #{loglist.tel}
+                                    td(width="10%")
+                                        if loglist.fee
+                                           | ￥#{loglist.fee}
+                                    td(width="10%") #{loglist.text_status}
+                                    td(width="10%") #{loglist.err_code}
+                                    td(width="20%") #{loglist.err_msg}
+    script(src='/js/sms.js')

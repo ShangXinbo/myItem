@@ -6,13 +6,13 @@ const qs = require('querystring');
 const Customer = require('../models/Customer');
 const Order = require('../models/Order');
 const Sms = require('../models/Sms');
+const SmsAlone = require('../models/SmsAlone');
 const Setting = require('../models/Setting');
 const FN = require('../classes/functions');
 const config = require('../configs/config');
 
 let send_sms_uri = '/v2/sms/tpl_single_send.json';
 let tpl_id = 1309895;
-
 
 let post = function (msgid, msg) {
     let options = {
@@ -121,3 +121,94 @@ exports.send = function (req, res) {
         });
     });
 };
+
+exports.alone = function(req,res){
+    SmsAlone.find({}).sort({'name': -1}).limit(1).exec(function (err, doc) {
+        SmsAlone.count({},function(err,count){
+            res.render('sms/list_alone', {
+                list: doc
+            });
+        })
+    });
+};
+
+let post2 = function (tel, text, msg_alone) {
+    let options = {
+        hostname: config.sms_host,
+        port: config.sms_port,
+        path: send_sms_uri,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+    };
+
+    let mobile = tel;
+    let tpl_value = {
+        '#userName#': text.split('，')[0],
+        '#content#': text.split('，')[1]
+    };
+    let post_data = {
+        'apikey': config.sms_apikey,
+        'mobile': mobile,
+        'tpl_id': tpl_id,
+        'tpl_value': qs.stringify(tpl_value)
+    };
+
+    let content = qs.stringify(post_data);
+
+    var req = https.request(options, function (res) {
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            chunk = JSON.parse(chunk);
+            console.log(chunk);
+            if(chunk.http_status_code == 400){
+                msg_alone.log.push({
+                    "sid": '',
+                    "tel": mobile,
+                    "status": 2,
+                    "err_code": chunk.code,
+                    "err_msg": chunk.msg
+                });
+            }else if(chunk.code == 0) {
+                msg_alone.log.push({
+                    "sid": chunk.sid,
+                    "tel": mobile,
+                    "status": 1,
+                    "fee": chunk.fee,
+
+                })
+            } else {
+                msg_alone.log.push({
+                    "sid": chunk.sid,
+                    "tel": mobile,
+                    "status": 2,
+                    "err_code": chunk.code,
+                    "err_msg": chunk.msg
+                });
+
+            }
+            msg_alone.save();
+        });
+    });
+    req.write(content);
+    req.end();
+};
+
+
+exports.sendAlone = function(req,res){
+
+    let tel = req.query.tel;
+    let content = req.query.content;
+    let msg_alone = new SmsAlone();
+    msg_alone.name = new Date().getTime();
+
+    msg_alone.save(function(){
+        for(var i=0;i<tel.length;i++){
+            post2(tel[i],content,msg_alone);
+        }
+        res.send(FN.resData(0, '已加入短信发送池'));
+    });
+
+};
+
