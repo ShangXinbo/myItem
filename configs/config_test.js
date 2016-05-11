@@ -1,5 +1,6 @@
 /**
  * Created by 31491 on 2016/5/5.
+ * 将config_test.js 更名为config.js，然后配置项在这里
  */
 
 module.exports = {
