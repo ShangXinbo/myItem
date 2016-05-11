@@ -13,6 +13,7 @@ const config = require('../configs/config');
 
 let send_sms_uri = '/v2/sms/tpl_single_send.json';
 let tpl_id = 1309895;
+let tpl_id2 = 1353625;
 
 let post = function (msgid, msg) {
     let options = {
@@ -144,15 +145,11 @@ let post2 = function (tel, text, msg_alone) {
     };
 
     let mobile = tel;
-    let tpl_value = {
-        '#userName#': text.split('，')[0],
-        '#content#': text.split('，')[1]
-    };
+
     let post_data = {
         'apikey': config.sms_apikey,
         'mobile': mobile,
-        'tpl_id': tpl_id,
-        'tpl_value': qs.stringify(tpl_value)
+        'tpl_id': tpl_id2
     };
 
     let content = qs.stringify(post_data);
