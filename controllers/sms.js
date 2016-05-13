@@ -45,7 +45,6 @@ let post = function (msgid, msg) {
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
             chunk = JSON.parse(chunk);
-            console.log(chunk);
             if (chunk.code == 0) {
                 Sms.update({'log': {$elemMatch: {_id: msg._id}}}, {
                     $set: {
@@ -133,7 +132,11 @@ exports.alone = function(req,res){
     });
 };
 
-let post2 = function (tel, text, msg_alone) {
+exports.sendAlone = function(req,res){
+
+    let tel = req.query.tel;
+    let msg_alone = new SmsAlone();
+    msg_alone.name = new Date().getTime();
     let options = {
         hostname: config.sms_host,
         port: config.sms_port,
@@ -143,69 +146,54 @@ let post2 = function (tel, text, msg_alone) {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
         }
     };
+    for(let i=0;i<tel.length;i++){
 
-    let mobile = tel;
+        let mobile = tel[i];
 
-    let post_data = {
-        'apikey': config.sms_apikey,
-        'mobile': mobile,
-        'tpl_id': tpl_id2
-    };
+        let post_data = {
+            'apikey': config.sms_apikey,
+            'mobile': mobile,
+            'tpl_id': tpl_id2
+        };
 
-    let content = qs.stringify(post_data);
+        let content = qs.stringify(post_data);
 
-    var req = https.request(options, function (res) {
-        res.setEncoding('utf8');
-        res.on('data', function (chunk) {
-            chunk = JSON.parse(chunk);
-            console.log(chunk);
-            if(chunk.http_status_code == 400){
-                msg_alone.log.push({
-                    "sid": '',
-                    "tel": mobile,
-                    "status": 2,
-                    "err_code": chunk.code,
-                    "err_msg": chunk.msg
-                });
-            }else if(chunk.code == 0) {
-                msg_alone.log.push({
-                    "sid": chunk.sid,
-                    "tel": mobile,
-                    "status": 1,
-                    "fee": chunk.fee,
-
-                })
-            } else {
-                msg_alone.log.push({
-                    "sid": chunk.sid,
-                    "tel": mobile,
-                    "status": 2,
-                    "err_code": chunk.code,
-                    "err_msg": chunk.msg
-                });
-
-            }
-            msg_alone.save();
+        var req = https.request(options, function (res) {
+            res.setEncoding('utf8');
+            res.on('data', function (chunk) {
+                chunk = JSON.parse(chunk);
+                if(chunk.http_status_code == 400){
+                    msg_alone.log.push({
+                        "sid": '',
+                        "tel": mobile,
+                        "status": 2,
+                        "err_code": chunk.code,
+                        "err_msg": chunk.msg
+                    });
+                }else if(chunk.code == 0) {
+                    msg_alone.log.push({
+                        "sid": chunk.sid,
+                        "tel": mobile,
+                        "status": 1,
+                        "fee": chunk.fee
+                    });
+                } else {
+                    msg_alone.log.push({
+                        "sid": chunk.sid,
+                        "tel": mobile,
+                        "status": 2,
+                        "err_code": chunk.code,
+                        "err_msg": chunk.msg
+                    });
+                }
+                if(msg_alone.log.length==tel.length){
+                    msg_alone.save();
+                }
+            });
         });
-    });
-    req.write(content);
-    req.end();
-};
-
-
-exports.sendAlone = function(req,res){
-
-    let tel = req.query.tel;
-    let content = req.query.content;
-    let msg_alone = new SmsAlone();
-    msg_alone.name = new Date().getTime();
-
-    msg_alone.save(function(){
-        for(var i=0;i<tel.length;i++){
-            post2(tel[i],content,msg_alone);
-        }
-        res.send(FN.resData(0, '已加入短信发送池'));
-    });
-
+        req.write(content);
+        req.end();
+    }
+    res.send(FN.resData(0, '已加入短信发送池'));
 };
 
