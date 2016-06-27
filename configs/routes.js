@@ -12,7 +12,8 @@ const setting = require('../controllers/setting');
 module.exports = function (app) {
     app
         .get('/', index)
-        .post('/upload/submit',account.isLogged, uploads.single('file'), upload.submit)
+        .post('/upload/submit',account.isLogged, uploads.array('file[]'), upload.submit)   //多文件上传
+        //.post('/upload/submit',account.isLogged, uploads.single('file'), upload.submit)  //单文件上传
         .get('/upload/',account.isLogged, upload.showtpl)
         .get('/courier/user', account.isLogged, customer.list)
         .get('/courier/user/add*', account.isLogged, customer.add)

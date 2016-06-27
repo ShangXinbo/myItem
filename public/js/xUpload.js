@@ -27,11 +27,13 @@
 
     //default options for this plugin
     var defaults = {
-        name: 'file',   // post key of the file, you can get the file through file['name']
-        accept: '',     // the MIME type of files that the uploader can accept    
-        url: '/upload', // the URL for commit 
+        auto: true,          // if set true, upload when you select files;
+        name: 'file',        // post key of the file, you can get the file through file['name']
+        accept: '',          // the MIME type of files that the uploader can accept
+        multiple: false,     // support multiple files upload, only htmlUpload ,if use in ie6~ie9 it doesn't work
+        url: '/upload',      // the URL for commit
         maxSize: 4 * 1024 * 1024, // maxSize of the upload file, support in modern browsers
-        data: {},       // other params to send
+        data: {},            // other params to send
         onSelect: function() {},  // trigger when select a file
         onSuccess: function() {}, // trigger when upload success 
         onError: function() {}
@@ -65,7 +67,7 @@
             var _this = this,
                 target = $(target);
 
-            var dom = $('<input type="file" />').css({ //set input[type="file"]
+            var dom = $('<input type="file" />').css({    //set input[type="file"]
                 'width': target.width(),
                 'height': target.height(),
                 'top': target.offset().top,
@@ -73,8 +75,14 @@
                 'position': 'absolute',
                 'opacity': '0',
                 'cursor': 'pointer',
-                'z-index': 1000 //max z-index 1000
+                'z-index': 1000     //max z-index 1000
             });
+
+            //set multiple
+            if(_this.options.multiple){
+                dom.attr('multiple','multiple');
+            }
+
 
             //accept file type limit ,MIME type string
             if (this.options.accept) {
@@ -82,14 +90,21 @@
             }
 
             dom.on('change', function(event) {
-                _this.file = this.files[0]; //TODO 支持多文件上传
+
                 //maxsize limit
-                if (_this.file.size <= _this.options.maxSize) {
-                    _this.options.onSelect();
-                    _this.upload(); //TODO 是否立即上传 this.options.auto
-                } else {
-                    console.log('Exceed the maximum file limit');
+                for(var i=0;i<this.files.length;i++){
+                    if (this.files[i].size >= _this.options.maxSize) {
+                        console.log('Exceed the maximum file limit');
+                        return false;
+                    }
                 }
+
+                _this.file = this.files;
+                _this.options.onSelect();
+                if(_this.options.auto){
+                    _this.upload();
+                }
+
             });
             $('body').append(dom);
         },
@@ -99,7 +114,13 @@
             var _this = this;
             var formData = new FormData();
 
-            formData.append(_this.options.name, _this.file); //add file
+            if(_this.options.multiple){
+                for(var i=0;i<_this.file.length;i++){
+                    formData.append(_this.options.name + '[]', _this.file[i]); //add file
+                }
+            }else{
+                formData.append(_this.options.name, _this.file[0]); //add file
+            }
 
             //other data to send
             if (this.options.data) {
@@ -108,12 +129,10 @@
                 }
             }
 
-            var xhr = new XMLHttpRequest(); // new XMLHttpRequest2
+            var xhr = new XMLHttpRequest(); // new XMLHttpRequest2  html5 support
             xhr.open('POST', _this.options.url, true); //upload use method post
             xhr.onload = function(event) {
                 if (xhr.status == 200) {
-                    console.log(xhr.responseText);
-                    return;
                     var data = eval('(' + xhr.responseText + ')');
                     if (data.status == 0) {
                         _this.onSuccess(); //upload success
@@ -151,7 +170,9 @@
 
             html.on('change', function() { //size limit is not supported here 
                 _this.options.onSelect();
-                _this.upload(this);
+                if(this.options.auto){
+                    _this.upload(this);
+                }
             });
 
             //other data
@@ -169,7 +190,7 @@
                     }
                     _this.options.onSuccess(data);
                 }
-                iframeLoadFirst = 1; //to prevent iframe loaded trigger when the document loaded
+                iframeLoadFirst = 1;   //to prevent iframe loaded trigger when the document loaded
             });
             $('body').append(iframe).append(form);
 
