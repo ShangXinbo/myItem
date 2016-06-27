@@ -42,6 +42,8 @@
             // @param data  xhr return data
         },
         onError: function () {
+        },
+        onProgress:function(event){   // trigger when xhr2 progress, only support in modern browsers
         }
     };
 
@@ -122,13 +124,16 @@
 
             var xhr = new XMLHttpRequest(); // new XMLHttpRequest2  html5 support
             xhr.open('POST', _this.options.url, true); //upload use method post
+            xhr.onprogress = function(event){
+                this.options.onProgress(event);
+            };
             xhr.onload = function (event) {
                 if (xhr.status == 200) {
                     var data = eval('(' + xhr.responseText + ')');
                     if (data.status == 0) {
-                        _this.onSuccess(data); //upload success
+                        _this.options.onSuccess(data); //upload success
                     } else {
-                        _this.onError();
+                        _this.options.onError();
                     }
                 } else {
                     _this.onError();

@@ -1,6 +1,7 @@
 'use strict';
 
-var fs = require('fs');
+const fs = require('fs');
+const FN = require('../classes/functions');
 
 exports.showtpl = function(req, res) {
     res.render('upload', {
@@ -9,7 +10,6 @@ exports.showtpl = function(req, res) {
 };
 exports.submit = function(req, res) {
 
-    console.log(req.file);
     if(req.files){ //multiple
         for(var i=0;i<req.files.length;i++){
             storage(req.files[i].originalname,req.files[i].path);
@@ -17,7 +17,7 @@ exports.submit = function(req, res) {
     }else{                  //single
         storage(req.file.originalname,req.file.path);
     }
-    res.end();
+    res.send(FN.resData(0, ''));
 };
 
 // 保存文件
