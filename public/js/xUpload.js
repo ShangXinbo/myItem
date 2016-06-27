@@ -8,7 +8,7 @@
 
 "use strict";
 
-(function(factory) {
+(function (factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as anonymous module.
         define(['jquery'], factory);
@@ -19,7 +19,7 @@
         // Browser globals.
         factory(jQuery || Zepto);
     }
-}(function($) {
+}(function ($) {
 
     if (!$) {
         return console.warn('xUpload needs jQuery'); //jQuery must be required
@@ -29,21 +29,23 @@
     var defaults = {
         auto: true,          // if set true, upload when you select files;
         name: 'file',        // post key of the file, you can get the file through file['name']
-        accept: '',          // the MIME type of files that the uploader can accept
-        multiple: false,     // support multiple files upload, only htmlUpload ,if use in ie6~ie9 it doesn't work
+        accept: '',          // the MIME type of files that the uploader can accept, only support in modern browsers
+        multiple: false,     // support multiple files upload, only support in modern browsers
         url: '/upload',      // the URL for commit
-        maxSize: 4 * 1024 * 1024, // maxSize of the upload file, support in modern browsers
+        maxSize: 4 * 1024 * 1024, // maxSize of the upload file, only support in modern browsers
         data: {},            // other params to send
-        onSelect: function() {},  // trigger when select a file
-        onSuccess: function() {}, // trigger when upload success 
-        onError: function() {}
+        onSelect: function () {
+        },  // trigger when select a file
+        onSuccess: function () {
+        }, // trigger when upload success
+        onError: function () {
+        }
     };
-
 
     /* upload for HTML5 and XMLHttpRequest2
      * when use on modern browsers,such as chrome,firefox,IE11,safari,opera
      */
-    var htmlUpload = function(obj, options) {
+    var htmlUpload = function (obj, options) {
         this.file = '';
         this.options = $.extend(defaults, options);
         this.init(obj);
@@ -62,63 +64,49 @@
 
     htmlUpload.prototype = {
 
-        init: function(target) {
+        init: function (target) {
 
-            var _this = this,
-                target = $(target);
+            var _this = this;
 
-            var dom = $('<input type="file" />').css({    //set input[type="file"]
-                'width': target.width(),
-                'height': target.height(),
-                'top': target.offset().top,
-                'left': target.offset().left,
-                'position': 'absolute',
-                'opacity': '0',
-                'cursor': 'pointer',
-                'z-index': 1000     //max z-index 1000
-            });
+            var dom = $('<input type="file" />').css(getBtnCSS(target));
 
             //set multiple
-            if(_this.options.multiple){
-                dom.attr('multiple','multiple');
+            if (_this.options.multiple) {
+                dom.attr('multiple', 'multiple');
             }
-
 
             //accept file type limit ,MIME type string
             if (this.options.accept) {
                 dom.attr('accept', this.options.accept);
             }
 
-            dom.on('change', function(event) {
-
+            dom.on('change', function (event) {
                 //maxsize limit
-                for(var i=0;i<this.files.length;i++){
+                for (var i = 0; i < this.files.length; i++) {
                     if (this.files[i].size >= _this.options.maxSize) {
                         console.log('Exceed the maximum file limit');
                         return false;
                     }
                 }
-
                 _this.file = this.files;
                 _this.options.onSelect();
-                if(_this.options.auto){
+                if (_this.options.auto) {
                     _this.upload();
                 }
-
             });
             $('body').append(dom);
         },
 
-        upload: function() {
+        upload: function () {
 
             var _this = this;
             var formData = new FormData();
 
-            if(_this.options.multiple){
-                for(var i=0;i<_this.file.length;i++){
+            if (_this.options.multiple) {
+                for (var i = 0; i < _this.file.length; i++) {
                     formData.append(_this.options.name + '[]', _this.file[i]); //add file
                 }
-            }else{
+            } else {
                 formData.append(_this.options.name, _this.file[0]); //add file
             }
 
@@ -131,7 +119,7 @@
 
             var xhr = new XMLHttpRequest(); // new XMLHttpRequest2  html5 support
             xhr.open('POST', _this.options.url, true); //upload use method post
-            xhr.onload = function(event) {
+            xhr.onload = function (event) {
                 if (xhr.status == 200) {
                     var data = eval('(' + xhr.responseText + ')');
                     if (data.status == 0) {
@@ -148,29 +136,19 @@
     };
 
     iframeUpload.prototype = {
-        init: function(target) {
 
-            var _this = this,
-                target = $(target);
+        init: function (target) {
+            var _this = this;
 
-            iframeNum++; //prevent Multiple uploader conflict
+            iframeNum++;   //prevent Multiple uploader conflict
 
             var iframe = $('<iframe name="iframe_' + iframeNum + '" style="display:none"></iframe>');
             var form = $('<form method="post" target="iframe_' + iframeNum + '" action="' + _this.options.url + '" name="form_' + iframeNum + '" enctype="multipart/form-data"></form>');
-            var html = $('<input type="file" name="' + _this.options.name + '" />').css({
-                'width': target.width(),
-                'height': target.height(),
-                'top': target.offset().top,
-                'left': target.offset().left,
-                'position': 'absolute',
-                'opacity': '0',
-                'cursor': 'pointer',
-                'z-index': 1000
-            });
+            var html = $('<input type="file" name="' + _this.options.name + '" />').css(getBtnCSS(target));
 
-            html.on('change', function() { //size limit is not supported here 
+            html.on('change', function () {
                 _this.options.onSelect();
-                if(this.options.auto){
+                if (this.options.auto) {
                     _this.upload(this);
                 }
             });
@@ -181,7 +159,7 @@
             }
 
             form.append(html);
-            iframe.load(function() {
+            iframe.load(function () {
                 if (iframeLoadFirst != 0) {
                     var contents = $(this).contents().get(0);
                     var data = $(contents).find('body').text();
@@ -190,19 +168,32 @@
                     }
                     _this.options.onSuccess(data);
                 }
-                iframeLoadFirst = 1;   //to prevent iframe loaded trigger when the document loaded
+                iframeLoadFirst = 1;     //to prevent iframe loaded trigger when the document loaded
             });
             $('body').append(iframe).append(form);
-
         },
-        upload: function(obj) {
+        upload: function (obj) {
             $(obj).parents('form').submit();
         }
     };
 
-    $.fn.xUpload = function(options) {
+
+    function getBtnCSS(target){
+        return {
+            'width': $(target).width(),
+            'height': $(target).height(),
+            'top': $(target).offset().top,
+            'left': $(target).offset().left,
+            'position': 'absolute',
+            'opacity': '0',
+            'cursor': 'pointer',
+            'z-index': 1000
+        };
+    } ;
+
+    $.fn.xUpload = function (options) {
         //Multi element support
-        return this.each(function() {
+        return this.each(function () {
             if (window.FormData) {
                 return new htmlUpload(this, options);
             } else {
