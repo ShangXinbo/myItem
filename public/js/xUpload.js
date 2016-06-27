@@ -34,10 +34,13 @@
         url: '/upload',      // the URL for commit
         maxSize: 4 * 1024 * 1024, // maxSize of the upload file, only support in modern browsers
         data: {},            // other params to send
-        onSelect: function () {
-        },  // trigger when select a file
-        onSuccess: function () {
-        }, // trigger when upload success
+        onSelect: function (event,files) {   // trigger when select a file
+            // @param event  the button of choose file
+            // @param files  files choosed
+        },
+        onSuccess: function (data) {         // trigger when upload success
+            // @param data  xhr return data
+        },
         onError: function () {
         }
     };
@@ -89,7 +92,7 @@
                     }
                 }
                 _this.file = this.files;
-                _this.options.onSelect();
+                _this.options.onSelect(event,_this.file);
                 if (_this.options.auto) {
                     _this.upload();
                 }
@@ -123,7 +126,7 @@
                 if (xhr.status == 200) {
                     var data = eval('(' + xhr.responseText + ')');
                     if (data.status == 0) {
-                        _this.onSuccess(); //upload success
+                        _this.onSuccess(data); //upload success
                     } else {
                         _this.onError();
                     }
@@ -146,8 +149,9 @@
             var form = $('<form method="post" target="iframe_' + iframeNum + '" action="' + _this.options.url + '" name="form_' + iframeNum + '" enctype="multipart/form-data"></form>');
             var html = $('<input type="file" name="' + _this.options.name + '" />').css(getBtnCSS(target));
 
-            html.on('change', function () {
-                _this.options.onSelect();
+            html.on('change', function (event) {
+                var file = $(this).val();
+                _this.options.onSelect(event,file);
                 if (this.options.auto) {
                     _this.upload(this);
                 }
@@ -189,7 +193,7 @@
             'cursor': 'pointer',
             'z-index': 1000
         };
-    } ;
+    }
 
     $.fn.xUpload = function (options) {
         //Multi element support
