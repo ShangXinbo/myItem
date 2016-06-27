@@ -41,9 +41,11 @@
         onSuccess: function (data) {         // trigger when upload success
             // @param data  xhr return data
         },
-        onError: function () {
+        onError: function (error) {        // trigger when upload fail, only support in modern browsers
+            // @param error  xhr.statusText
         },
         onProgress:function(event){   // trigger when xhr2 progress, only support in modern browsers
+            // @param event progress
         }
     };
 
@@ -136,7 +138,7 @@
                         _this.options.onError();
                     }
                 } else {
-                    _this.onError();
+                    _this.onError(xhr.statusText);
                 }
             };
             xhr.send(formData);
