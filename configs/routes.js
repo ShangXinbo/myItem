@@ -1,6 +1,5 @@
 'use strict';
 
-const upload = require('../controllers/upload');
 const order = require('../controllers/order');
 const customer = require('../controllers/customer');
 const sms = require('../controllers/sms');
@@ -10,7 +9,7 @@ const setting = require('../controllers/setting');
 
 module.exports = function (app) {
     app
-        .get('/', index)
+        .get('/', account.isLogged, customer.list)
         .get('/courier/user', account.isLogged, customer.list)
         .get('/courier/user/add*', account.isLogged, customer.add)
         .all('/courier/user/edit*', account.isLogged, customer.edit)

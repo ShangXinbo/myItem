@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const FN = require('../classes/functions');
 const accountSchema = new mongoose.Schema({
     username: String,
     password: String,
@@ -30,6 +31,7 @@ exports.login = function (req, res) {
             }
             else {
                 console.error('用户名或密码错误');
+                res.send(FN.resData(1, '用户名或密码错误'));
             }
         });
     } else {
