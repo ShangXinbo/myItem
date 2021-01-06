@@ -1,1 +1,31 @@
-<mxfile host="app.diagrams.net" modified="2021-01-06T05:29:31.346Z" agent="5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" version="14.1.6" etag="H9_AuR5r3YXK85t4W6nn" type="github"><diagram id="3MOQc7lFXMPfuBXBcNNt">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-01-06T05:54:56.060Z" agent="5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="U92cH70_NWvl8_klb4al" version="14.1.6" type="github">
+  <diagram id="3MOQc7lFXMPfuBXBcNNt" name="第 1 页">
+    <mxGraphModel dx="1298" dy="740" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="NeIeNaJoluUzUPgu6DNu-4" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="145" width="50" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="NeIeNaJoluUzUPgu6DNu-5" value="access_log&amp;nbsp; 每秒30W的日志量" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="260" y="170" width="210" as="geometry" />
+        </mxCell>
+        <mxCell id="NeIeNaJoluUzUPgu6DNu-6" value="异常日志&amp;nbsp;&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="210" y="210" width="210" as="geometry" />
+        </mxCell>
+        <mxCell id="NeIeNaJoluUzUPgu6DNu-7" value="&lt;span&gt;logger.info()&lt;br&gt;落盘&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="165" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="NeIeNaJoluUzUPgu6DNu-8" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="270" width="50" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="NeIeNaJoluUzUPgu6DNu-9" value="实时上报clickhouse" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="230" y="300" width="210" as="geometry" />
+        </mxCell>
+        <mxCell id="NeIeNaJoluUzUPgu6DNu-11" value="&lt;span&gt;logger.perf()&lt;br&gt;每分钟聚合上报，基本不影响性能&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="290" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
