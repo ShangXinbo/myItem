@@ -1,1 +1,25 @@
-<mxfile host="app.diagrams.net" modified="2021-01-08T10:37:25.975Z" agent="5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" version="14.1.8" etag="4QNz4WOLQN6ikbKJ0K1U" type="github"><diagram id="_l0eMfmA_qELYhBkMRI8">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-01-08T10:39:21.447Z" agent="5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="BIAVWlMB4EccZ5tN4H6T" version="14.1.8" type="github">
+  <diagram id="_l0eMfmA_qELYhBkMRI8" name="第 1 页">
+    <mxGraphModel dx="1298" dy="683" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_xQ0Pkfly4as0XjmXsb6-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="130" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="_xQ0Pkfly4as0XjmXsb6-2" value="webloger" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="230" y="140" width="70" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="_xQ0Pkfly4as0XjmXsb6-3" value="业务埋点，pv打点" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="170" y="190" width="70" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="_xQ0Pkfly4as0XjmXsb6-5" value="radar性能上报" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="172.5" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="_xQ0Pkfly4as0XjmXsb6-6" value="ksLog校验日志" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="130" width="120" height="90" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
